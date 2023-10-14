@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    ps-overlay.url = "github:thomashoneyman/purescript-overlay";
     registry = {
       url = "github:purescript/registry";
       flake = false;
@@ -14,29 +15,34 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, registry, registry-index }:
+  outputs = { self, nixpkgs, flake-utils, ps-overlay, registry, registry-index }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let pkgs =
-            nixpkgs.legacyPackages.${system};
+            import nixpkgs {
+              inherit system;
+              overlays = [ ps-overlay.overlays.default ];
+            };
 
-          fromYaml =
-            import ./from-yaml.nix { yaml2json = pkgs.yaml2json; stdenv = pkgs.stdenv; };
+          stdenv =
+            pkgs.stdenv;
+
+          lib =
+            pkgs.lib;
+
+          fromYAML =
+            import ./fromYAML.nix { inherit stdenv; yaml2json = pkgs.yaml2json; };
 
           buildDotSpago =
-            (import ./lib.nix {inherit registry registry-index fromYaml; stdenv = pkgs.stdenv;  spagoDotYaml = builtins.readFile ./spago.yaml; }).buildSpagoNodeJs;
+            import ./buildDotSpago.nix { inherit stdenv registry lib registry-index; };
+
+          buildSpagoNodeJs =
+            import ./buildSpagoNodeJs.nix { inherit stdenv registry registry-index; };
       in
         {
+          mkSpagoDerivation =
+            import ./mkSpagoDerivation.nix { inherit stdenv fromYAML buildDotSpago buildSpagoNodeJs registry registry-index; spago = pkgs.spago-unstable; purs = pkgs.purs; git = pkgs.git; };
 
-          packages.hello = buildDotSpago;
-
-          defaultPackage = self.packages.${system}.hello;
-
-          devShell = pkgs.mkShell {
-            inputsFrom = [ ]; # Include build inputs from packages in
-            # this list
-            packages = [ ]; # Extra packages to go in the shell
-          };
       }
     );
 

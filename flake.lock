@@ -34,6 +34,41 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1688609058,
+        "narHash": "sha256-ehzS5vsaEdTve4ivw33PZ1orDdQJxpdLbK1VQLcRxws=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "15b5303444726346ee9d95bc890e8317c4f437b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "release-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "ps-overlay": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2",
+        "slimlock": "slimlock"
+      },
+      "locked": {
+        "lastModified": 1696754599,
+        "narHash": "sha256-qS5DTaPdMi5I6fZqRcguCjH1gznN/IfeasqzGJAaBlg=",
+        "owner": "thomashoneyman",
+        "repo": "purescript-overlay",
+        "rev": "31ce998c770647a8f732dbb51ecc09abda3beb38",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomashoneyman",
+        "repo": "purescript-overlay",
+        "type": "github"
+      }
+    },
     "registry": {
       "flake": false,
       "locked": {
@@ -70,8 +105,30 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "ps-overlay": "ps-overlay",
         "registry": "registry",
         "registry-index": "registry-index"
+      }
+    },
+    "slimlock": {
+      "inputs": {
+        "nixpkgs": [
+          "ps-overlay",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1688610262,
+        "narHash": "sha256-Wg0ViDotFWGWqKIQzyYCgayeH8s4U1OZcTiWTQYdAp4=",
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "rev": "b5c6cdcaf636ebbebd0a1f32520929394493f1a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "thomashoneyman",
+        "repo": "slimlock",
+        "type": "github"
       }
     },
     "systems": {
