@@ -1,17 +1,11 @@
 { stdenv, fromYAML, buildDotSpago, buildSpagoNodeJs, registry, registry-index, spago, purs, git }:
-{
-  src
-, spagoYamlFile ? "${src}/spago.yaml"
+{ src
 
-, spagoArgs ? ["build"]
+, spagoYamlFile ? "${src}/spago.yaml"
 
 , nativeBuildInputs ? []
 
-, pname ? false
-
-, version ? ""
-
-} @ args:
+, ...} @ args:
 let
   spagoNix =
     fromYAML (builtins.readFile spagoYamlFile);
@@ -21,34 +15,66 @@ let
 
   spagoNodeJs =
     buildSpagoNodeJs;
-in
-stdenv.mkDerivation (args // {
+
+  pname =
+    if builtins.hasAttr "pname" args
+    then args.pname
+    else spagoNix.package.name;
+
+  version =
+    if builtins.hasAttr "version" args
+    then "-${args.version}"
+    else
+      if builtins.hasAttr "pname" args
+      then throw "specify version or just use \"name\""
+      else "";
+
   name =
-    if pname == false then spagoNix.package.name else pname;
+    if builtins.hasAttr "name" args
+    then args.name
+    else "${pname}${version}";
 
-  src =
-    src;
 
-  nativeBuildInputs =
-    [git purs] ++ nativeBuildInputs;
+  output =
+    if builtins.hasAttr "build_opts" spagoNix.workspace
+       && builtins.hasAttr "output" spagoNix.workspace.build_opts
+    then spagoNix.workspace.build_opts
+    else "output*";
 
   buildPhase =
-    ''
-    runHook preBuild;
-    mkdir .spago;
-    cp -r ${dotSpago}/.spago .;
-    export HOME=$(mktemp -d);
-    mkdir $HOME/.cache;
-    cp -r ${spagoNodeJs}/* $HOME/.cache;
-    ${spago}/bin/spago ${builtins.concatStringsSep " " spagoArgs};
-    runHook postBuild;
-    '';
+    let
+      buildCommand =
+        if builtins.hasAttr "buildPhase" args
+        then args.buildPhase
+        else "spago build";
+    in
+      ''
+        runHook preBuild
+        mkdir .spago
+        cp -r ${dotSpago}/.spago .
+        export HOME=$(mktemp -d)
+        mkdir $HOME/.cache
+        cp -r ${spagoNodeJs}/* $HOME/.cache
+        ${buildCommand}
+        runHook postBuild
+        '';
 
   installPhase =
-    ''
-    runHook preInstall
-    mkdir $out
-    cp -r output $out
-    runHook postInstall
-    '';
+    if builtins.hasAttr "installPhase" args
+    then args.installPhase
+    else
+      ''
+      runHook preInstall
+      mkdir $out
+      cp -r ${output} $out
+      runHook postInstall
+      '';
+in
+stdenv.mkDerivation (args // {
+  inherit name buildPhase installPhase;
+  nativeBuildInputs =
+    [ (if builtins.hasAttr "git" args then args.git else git)
+      (if builtins.hasAttr "purs" args then args.purs else purs)
+      (if builtins.hasAttr "spago" args then args.spago else spago)
+    ] ++ nativeBuildInputs;
 })
