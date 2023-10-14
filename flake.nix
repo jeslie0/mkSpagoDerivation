@@ -1,5 +1,5 @@
 {
-  description = "A very basic flake";
+  description = "A flake providing tools for building purescript projects with spago.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -16,34 +16,83 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, ps-overlay, registry, registry-index }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let pkgs =
-            import nixpkgs {
-              inherit system;
-              overlays = [ ps-overlay.overlays.default ];
-            };
+    let
+      fromYAMLBuilder = prev:
+        import ./fromYAML.nix {
+          stdenv = prev.stdenv;
+          yaml2json = prev.yaml2json;
+        };
 
-          stdenv =
-            pkgs.stdenv;
+      buildDotSpagoBuilder = prev:
+        import ./buildDotSpago.nix {
+          inherit registry registry-index;
+          stdenv = prev.stdenv;
+          lib = prev.lib;
+        };
 
-          lib =
-            pkgs.lib;
+      buildSpagoNodeJsBuilder = prev:
+        import ./buildSpagoNodeJs.nix {
+          inherit registry registry-index;
+          stdenv = prev.stdenv;
+        };
 
-          fromYAML =
-            import ./fromYAML.nix { inherit stdenv; yaml2json = pkgs.yaml2json; };
+      mkSpagoDerivationBuilder = final: prev:
+        let
+          overlayedPkgs =
+            ps-overlay.overlays.default final prev;
 
-          buildDotSpago =
-            import ./buildDotSpago.nix { inherit stdenv registry lib registry-index; };
+          spago =
+            overlayedPkgs.spago-unstable;
 
-          buildSpagoNodeJs =
-            import ./buildSpagoNodeJs.nix { inherit stdenv registry registry-index; };
-      in
-        {
-          mkSpagoDerivation =
-            import ./mkSpagoDerivation.nix { inherit stdenv fromYAML buildDotSpago buildSpagoNodeJs registry registry-index; spago = pkgs.spago-unstable; purs = pkgs.purs; git = pkgs.git; };
+          purs =
+            overlayedPkgs.purs;
+        in
+          import ./mkSpagoDerivation.nix {
+            inherit registry registry-index spago purs;
+            buildDotSpago = buildDotSpagoBuilder prev;
+            buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
+            fromYAML = fromYAMLBuilder prev;
+            stdenv = prev.stdenv;
+            git = prev.git;
+          };
+    in
+      {
+        overlays = {
+          default = final: prev:
+            prev.lib.composeManyExtensions
+              (builtins.attrValues (builtins.removeAttrs self.overlays ["default"])) final prev;
 
+          buildDotSpago = final: prev: {
+            buildDotSpago = buildDotSpagoBuilder prev;
+          };
+
+          buildSpagoNodeJs = final: prev: {
+            buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
+          };
+
+          mkSpagoDerivation = final: prev: {
+            mkSpagoDerivation = mkSpagoDerivationBuilder prev final;
+          };
+        };
       }
-    );
+      // flake-utils.lib.eachDefaultSystem (
+        system:
+        let pkgs =
+              import nixpkgs {
+                inherit system;
+                overlays = [ ps-overlay.overlays.default ];
+              };
+        in
+          {
+            buildDotSpago =
+              buildDotSpagoBuilder pkgs;
+
+            buildSpagoNodeJs =
+              buildSpagoNodeJsBuilder pkgs;
+
+            mkSpagoDerivation =
+              mkSpagoDerivationBuilder pkgs pkgs;
+          }
+      );
 
 }
