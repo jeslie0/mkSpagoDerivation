@@ -18,20 +18,20 @@
   outputs = { self, nixpkgs, flake-utils, ps-overlay, registry, registry-index }:
     let
       fromYAMLBuilder = prev:
-        import ./fromYAML.nix {
+        import ./nix/fromYAML.nix {
           stdenv = prev.stdenv;
           yaml2json = prev.yaml2json;
         };
 
       buildDotSpagoBuilder = prev:
-        import ./buildDotSpago.nix {
+        import ./nix/buildDotSpago.nix {
           inherit registry registry-index;
           stdenv = prev.stdenv;
           lib = prev.lib;
         };
 
       buildSpagoNodeJsBuilder = prev:
-        import ./buildSpagoNodeJs.nix {
+        import ./nix/buildSpagoNodeJs.nix {
           inherit registry registry-index;
           stdenv = prev.stdenv;
         };
@@ -47,7 +47,7 @@
           purs =
             overlayedPkgs.purs;
         in
-          import ./mkSpagoDerivation.nix {
+          import ./nix/mkSpagoDerivation.nix {
             inherit registry registry-index spago purs;
             buildDotSpago = buildDotSpagoBuilder prev;
             buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
