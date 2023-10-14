@@ -1,0 +1,36 @@
+package:
+  dependencies:
+    - aff
+    - aff-promise
+    - arraybuffer
+    - arraybuffer-types
+    - arrays
+    - canvas
+    - cartesian
+    - console
+    - effect
+    - float32
+    - foldable-traversable
+    - halogen
+    - integers
+    - maybe
+    - numbers
+    - prelude
+    - transformers
+    - uint
+    - web-events
+    - web-file
+    - web-html
+    - web-streams
+  name: speccy
+  test:
+    dependencies: []
+    main: Test.Main
+workspace:
+  # backend:
+  #   cmd: "purs-backend-es"
+  #   args:
+  #     - "build"
+  extra_packages: {}
+  package_set:
+    registry: 43.0.0
