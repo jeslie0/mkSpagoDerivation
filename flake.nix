@@ -73,6 +73,10 @@
           mkSpagoDerivation = final: prev: {
             mkSpagoDerivation = mkSpagoDerivationBuilder prev final;
           };
+
+          fromYAML = final: prev: {
+            fromYAML = fromYAMLBuilder prev;
+          };
         };
       }
       // flake-utils.lib.eachDefaultSystem (
@@ -92,6 +96,9 @@
 
             mkSpagoDerivation =
               mkSpagoDerivationBuilder pkgs pkgs;
+
+            fromYAML =
+              fromYAMLBuilder pkgs;
           }
       );
 
