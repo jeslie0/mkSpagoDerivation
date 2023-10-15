@@ -1,7 +1,13 @@
 { stdenv, registry, registry-index, lib }:
-spagoNix:
+{ spagoNix
+, symlink ? false}:
 
 let
+  command =
+    if symlink
+    then "ln -s"
+    else "cp -r";
+
   registryVersion =
     spagoNix.workspace.package_set.registry;
 
@@ -140,7 +146,7 @@ let
     builtins.map
       (package: ''
           mkdir -p .spago/packages/${package.pname}-${package.version};
-          cp -R ${package.pkgDerivation}/* .spago/packages/${package.pname}-${package.version};
+          ${command} ${package.pkgDerivation}/* .spago/packages/${package.pname}-${package.version};
           '')
       derivationArray;
 in

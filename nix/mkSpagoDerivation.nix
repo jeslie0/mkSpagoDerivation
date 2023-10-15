@@ -11,10 +11,10 @@ let
     fromYAML (builtins.readFile spagoYamlFile);
 
   dotSpago =
-    buildDotSpago spagoNix;
+    buildDotSpago { inherit spagoNix; symlink = true; };
 
   spagoNodeJs =
-    buildSpagoNodeJs;
+    buildSpagoNodeJs { symlink = true; };
 
   pname =
     if builtins.hasAttr "pname" args

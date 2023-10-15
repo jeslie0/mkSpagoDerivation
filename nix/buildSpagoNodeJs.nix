@@ -1,5 +1,11 @@
 { stdenv, registry, registry-index }:
-
+{ symlink ? false }:
+let
+  command =
+    if symlink
+    then "ln -s"
+    else "cp -r";
+in
 stdenv.mkDerivation {
   name = "spagoNodeJs";
   src = ./.;
@@ -7,9 +13,9 @@ stdenv.mkDerivation {
   ''
   mkdir -p $out/spago-nodejs;
   mkdir $out/spago-nodejs/registry;
-  cp -R ${registry}/* $out/spago-nodejs/registry
+  ${command} ${registry}/* $out/spago-nodejs/registry
   mkdir $out/spago-nodejs/registry-index;
-  cp -R ${registry-index}/* $out/spago-nodejs/registry-index
+  ${command} ${registry-index}/* $out/spago-nodejs/registry-index
   touch $out/spago-nodejs/fresh-registry-canary.txt
   '';
 }

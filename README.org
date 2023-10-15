@@ -80,7 +80,9 @@ The only attribute ~mkSpagoDerivation~ requires is ~src~. Everything else is pas
 }
 #+end_src
 
-Also exposed are the functions ~buildDotSpago~ (which builds a project's =.spago= directory) and ~buildSpagoNodeJs~ (which builds the =spago-nodejs= directory, typically located in the user's =.cache= directory). Each function takes a Nix attribute set representing the user's =spago.yaml= as input. You can create this attribute set using the ~fromYAML~ fuction, provided by this flake (in an overlay and an output). This function is also used by ~mkSpagoDerivation~ and requires [[https://nixos.org/manual/nix/unstable/language/import-from-derivation][Import From Derivation]] (IFD). When a method for transforming a YAML file into a Nix attribute set that doesn't require IFD becomes available, we will adopt it.
+Some other useful functions are exposed. One is ~buildDotSpago~, which builds a project's =.spago= directory. It takes an attribute set ~{ spagoNix, symlink }~ which are respectively nix version of the =spago.yaml= file (more mentioned below) and a boolean determining if the directory should by generated with symbolic links or by copying. =symlink= is set to ~false~ by default. Another useful function is ~buildSpagoNodeJs~, which builds the =spago-nodejs= directory, typically located in the user's =.cache= directory. This function takes an attribute set { symlink } also.
+
+The ~spagoNix~ attribute set can be made by using the ~fromYAML~ function which is also provided by this flake (in an overlay and an output). It behaves similarly to the builtin ~fromJSON~ function: converts a stringified YAML to a Nix attribute set. This function is also used by ~mkSpagoDerivation~ and requires [[https://nixos.org/manual/nix/unstable/language/import-from-derivation][Import From Derivation]] (IFD). When a method for transforming a YAML file into a Nix attribute set that doesn't require IFD becomes available, we will adopt it.
 
 * Out of date registry
 It is possible for this repository to not have the most up-to-date registry set. If you cant wait for the GitHub action to update this repository, you can override the =registry= and =registry-index= inputs to this flake.
@@ -120,7 +122,6 @@ It is possible for this repository to not have the most up-to-date registry set.
     );
 }
 #+end_src
-
 
 * Limitations
 At the time of writing, this project only supports PureScript projects that make use of the newer Spago releases. In particular, the project needs a =spago.yaml= file.
