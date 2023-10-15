@@ -80,7 +80,7 @@ let
   directDependencies =
     let
       dependencyNamesArray =
-        spagoNix.package.dependencies;
+        [ "psci-support" ] ++ spagoNix.package.dependencies;
     in
       builtins.map (pname: { inherit pname; version = registryNixPackages.${pname}; }) dependencyNamesArray;
 
