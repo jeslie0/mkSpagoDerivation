@@ -61,7 +61,12 @@ let
 
   installPhase =
     if builtins.hasAttr "installPhase" args
-    then args.installPhase
+    then
+      ''
+      runHook preInstall
+      ${args.installPhase}
+      runHook postInstall
+      ''
     else
       ''
       runHook preInstall
