@@ -1,0 +1,39 @@
+name: Update Registry Commits
+run-name: Update the PureScript Registry and Registry-index commits.
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  Update-JSON-Data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setting up Checkout
+        uses: actions/checkout@v3
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v18
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Registry
+        run: |
+          nix flake lock --update-input registry
+          nix flake lock --update-input registry-index
+
+      - name: Set up Git config
+        run: |
+          git config user.name "github-actions"
+          git config user.email "<>"
+
+      - name: Commit and push changes
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git add .
+            git commit -m "[ghactions] Update elm-hashes, elm-failures and all-packages JSONs"
+            git push
+          else
+            echo "No changes!"
+          fi
