@@ -3,12 +3,14 @@
 , symlink ? false}:
 
 let
+  # Symlink or copy command.
   command =
     if symlink
     then "ln -s"
     else "cp -r";
 
-  makePackageDerivation = { pname, version }:
+  # Takes a package and version and returns a derivation.
+  makePackageDerivation = { pname, version, ...}:
     let
       metadataNix =
         builtins.fromJSON (builtins.readFile "${registry}/metadata/${pname}.json");
@@ -24,8 +26,7 @@ let
 
       pkgDerivation =
         stdenv.mkDerivation {
-          pname =
-            pname;
+          inherit pname;
 
           version =
             packageInfo.ref;
@@ -42,13 +43,17 @@ let
     in
       { inherit pname version pkgDerivation; };
 
+  # Array of all dependencies for the package
+  # [{pname, version}]
   fullDependencyArray =
     builtins.attrValues
-      (import ./buildDependencyAttr.nix constArgs {inherit symlink;} spagoNix ["psci-support"] {});
+      ((import ./registry.nix constArgs spagoNix).dependencyArray { extraPackageNames = ["psci-support"]; });
 
+  # Array of derivations for the dependencies
   derivationArray =
     builtins.map makePackageDerivation fullDependencyArray;
 
+  # List of commands used to put each dependency in the correct place.
   commandsList =
     builtins.map
       (package: ''
