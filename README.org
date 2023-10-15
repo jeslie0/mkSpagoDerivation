@@ -4,14 +4,22 @@
 
 This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Leveraging [[https://github.com/purescript/registry][PureScript's registry]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.yaml= as a single source of truth for dependencies.
 
+* Table of contents                                                     :toc:
+- [[#examples][Examples]]
+- [[#out-of-date-registry][Out of date registry]]
+- [[#limitations][Limitations]]
+- [[#notes][Notes]]
+  - [[#hooks][Hooks]]
+  - [[#todos][TODOs]]
+- [[#related][Related]]
+- [[#license][License]]
+
 * Examples
 The most important function that this flake provides is the ~mkSpagoDerivation~ function, exposed as both an output and via an overlay. This provides a wrapper around ~stdenv.mkDerivation~ which puts all of your project's dependencies in the right place, making it easy for you to build your projects reproducibly.
 
 Here is a simple =flake.nix= that builds a PureScript project.
 #+begin_src nix
 {
-  description = "A development shell for a PureScript project.";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
@@ -44,8 +52,6 @@ Here is a simple =flake.nix= that builds a PureScript project.
 The only attribute ~mkSpagoDerivation~ requires is ~src~. Everything else is passed into ~mkDerivation~. The default ~buildPhase~ runs =spago build= and the default ~installPhase~ copies the output directory (either specified in =spago.yaml= or otherwise just =output*=) into =$out=. The function uses specific versions of Spago, the PureScript compiler and Git to build its output, however; these three programs can be overridden by passing the different versions straight into ~mkSpagoDerivation~'s argument set. Other dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using the [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using a the unstable PureScript compiler from the PureScript Overlay.
 #+begin_src nix
 {
-  description = "A development shell for a PureScript project.";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
@@ -88,8 +94,6 @@ The ~spagoNix~ attribute set can be made by using the ~fromYAML~ function which 
 It is possible for this repository to not have the most up-to-date registry set. If you cant wait for the GitHub action to update this repository, you can override the =registry= and =registry-index= inputs to this flake.
 #+begin_src nix
 {
-  description = "A development shell for a PureScript project.";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
@@ -137,9 +141,16 @@ The ~buildPhase~ and ~installPhase~ always run =pre= and =post= hooks, even if t
   Currently, only dependencies from the specified package set are fetched. More complex dependency (such as dependencies not located in the registry) management will be added in the future.
 
 * Related
-** [[https://github.com/purifix/purifix/][Purifix]]
-A different tool to package PureScript programs with Nix.
-** [[https://github.com/justinwoo/spago2nix][spago2nix]]
-Another tool for packaging PureScript programs with Nix.
-** [[https://github.com/jesli0/mkElmDerivation][mkElmDerivation]]
-A similar tool (that I created) to package [[https://elm-lang.org/][Elm]] applications with Nix.
+- [[https://github.com/purifix/purifix/][purifix]]
+  A different tool to package PureScript programs with Nix.
+- [[https://github.com/justinwoo/spago2nix][spago2nix]]
+  Another tool for packaging PureScript programs with Nix.
+- [[https://github.com/justinwoo/easy-purescript-nix][easy-purescript-nix]]
+  A repository and Nix flake that provides lots of PureScript tools.
+- [[https://github.com/purs-nix/purs-nix][purs-nix]]
+  A tool for Nix based PureScript development.
+- [[https://github.com/jesli0/mkElmDerivation][mkElmDerivation]]
+  A similar tool (that I created) to package [[https://elm-lang.org/][Elm]] applications with Nix.
+
+* License
+All of this repository is under the MIT license except from the [[./nix/fromYAML.nix][fromYAML]] file. This way converting a yaml file to a Nix attribute set has been graciously taken from purifix, which is licensed under BSD-3.
