@@ -2,10 +2,10 @@
 #+author: James Leslie
 [[https://img.shields.io/badge/built%20for-PureScript-1d222d.svg]]  [[https://img.shields.io/github/license/jeslie0/mkelmderivation.svg]]
 
-This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Making use of [[https://github.com/purescript/registry][PureScript's registry]], this repository provides functionality to create reproducible builds of PureScript projects with minimal fuss. This works by treating a PureScript project's =spago.yaml= as a single source of truth for dependencies.
+This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Leveraging [[https://github.com/purescript/registry][PureScript's registry]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.yaml= as a single source of truth for dependencies.
 
 * Examples
-The most important function that this flake provides is the ~mkSpagoDerivation~ function, exposed as both an output and an overlay. This provides a wrapper around ~stdenv.mkDerivation~ which puts all of your project's dependencies in the right place, making it easy for you to build your projects reproducibly.
+The most important function that this flake provides is the ~mkSpagoDerivation~ function, exposed as both an output and via an overlay. This provides a wrapper around ~stdenv.mkDerivation~ which puts all of your project's dependencies in the right place, making it easy for you to build your projects reproducibly.
 
 Here is a simple =flake.nix= that builds a PureScript project.
 #+begin_src nix
@@ -41,7 +41,7 @@ Here is a simple =flake.nix= that builds a PureScript project.
 }
 #+end_src
 
-The only attribute ~mkSpagoDerivation~ requires is ~src~. Everything else is passed into ~mkDerivation~. The default ~buildPhase~ runs =spago build= and the default ~installPhase~ copies the output directory (either specified in =spago.yaml= or otherwise just =output*=) into =$out=. The function uses preset versions of Spago, the PureScript compiler and Git to build its output, however; these three programs can be overridden by passing the different versions straight into ~mkSpagoDerivation~'s argument set. Other dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using the [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using a the unstable PureScript compiler from the PureScript Overlay.
+The only attribute ~mkSpagoDerivation~ requires is ~src~. Everything else is passed into ~mkDerivation~. The default ~buildPhase~ runs =spago build= and the default ~installPhase~ copies the output directory (either specified in =spago.yaml= or otherwise just =output*=) into =$out=. The function uses specific versions of Spago, the PureScript compiler and Git to build its output, however; these three programs can be overridden by passing the different versions straight into ~mkSpagoDerivation~'s argument set. Other dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using the [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using a the unstable PureScript compiler from the PureScript Overlay.
 #+begin_src nix
 {
   description = "A development shell for a PureScript project.";
@@ -80,7 +80,7 @@ The only attribute ~mkSpagoDerivation~ requires is ~src~. Everything else is pas
 }
 #+end_src
 
-Also exposed are the functions ~buildDotSpago~ (which builds a project's =.spago= directory) and ~buildSpagoNodeJs~ (which builds the =spago-nodejs= directory - normally located in the user's =.cache= directory). Each function takes one input, which is a Nix attribute set representing the user's =spago.yaml=. It can be formed from the function ~fromYAML~ which is also provided by this flake (as an overlay and an output). This function is also used by ~mkSpagoDerivation~ and requires [[https://nixos.org/manual/nix/unstable/language/import-from-derivation][Import From Derivation]] (IFD). When a way to turn a YAML file into a Nix attribute set that doesn't require IFD becomes public, that will be used instead.
+Also exposed are the functions ~buildDotSpago~ (which builds a project's =.spago= directory) and ~buildSpagoNodeJs~ (which builds the =spago-nodejs= directory, typically located in the user's =.cache= directory). Each function takes a Nix attribute set representing the user's =spago.yaml= as input. You can create this attribute set using the ~fromYAML~ fuction, provided by this flake (in an overlay and an output). This function is also used by ~mkSpagoDerivation~ and requires [[https://nixos.org/manual/nix/unstable/language/import-from-derivation][Import From Derivation]] (IFD). When a method for transforming a YAML file into a Nix attribute set that doesn't require IFD becomes available, we will adopt it.
 
 * Notes
 ** Hooks
@@ -88,7 +88,7 @@ The ~buildPhase~ and ~installPhase~ always run =pre= and =post= hooks, even if t
 
 ** TODOs
 - [ ] Allow more complex dependencies in the =spago.yaml= file.
-  Currently, only dependencies from the specified package set are fetched. More complex dependencies management will be added in the future.
+  Currently, only dependencies from the specified package set are fetched. More complex dependency (such as dependencies not located in the registry) management will be added in the future.
 
 * Related
 ** [[https://github.com/purifix/purifix/][Purifix]]
