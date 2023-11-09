@@ -24,10 +24,11 @@
         };
 
       buildDotSpagoBuilder = prev:
-        import ./nix/buildDotSpago.nix {
-          inherit registry registry-index;
-          stdenv = prev.stdenv;
+        import ./nix/buildDotSpago/buildDotSpago.nix {
+          inherit self registry registry-index;
+          mkDerivation = prev.stdenv.mkDerivation;
           lib = prev.lib;
+          fromYAML = fromYAMLBuilder prev;
         };
 
       buildSpagoNodeJsBuilder = prev:
@@ -62,14 +63,20 @@
             prev.lib.composeManyExtensions
               (builtins.attrValues (builtins.removeAttrs self.overlays ["default"])) final prev;
 
+          # Function that returns a derivation outputting the .spago
+          # directory needed for the given project.
           buildDotSpago = final: prev: {
             buildDotSpago = buildDotSpagoBuilder prev;
           };
 
+          # Function that returns a derivation outputting the spago-nodejs
+          # directory needed for the given project.
           buildSpagoNodeJs = final: prev: {
             buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
           };
 
+          # Function that takes a spago.yaml or a spago.lock file and
+          # builds the project here.
           mkSpagoDerivation = final: prev: {
             mkSpagoDerivation = mkSpagoDerivationBuilder prev final;
           };

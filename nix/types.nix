@@ -20,10 +20,10 @@
     legacy = 2;
   };
 
-
-
-
-
-
-
+  # A "type" representing the method used to build a .spago
+  # directory.
+  buildMethod = {
+    spago = 0;
+    lockFile = 1;
+  };
 }
