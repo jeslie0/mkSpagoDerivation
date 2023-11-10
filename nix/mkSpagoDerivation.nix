@@ -1,27 +1,22 @@
 { stdenv, fromYAML, buildDotSpago, buildSpagoNodeJs, registry, registry-index, spago, purs, git }:
 { src
 
-, spagoYamlFile ? "${src}/spago.yaml"
+, spagoYaml ? "${src}/spago.yaml"
 
-, spagoLockFile ? false
+, lockFile ? false
 
 , nativeBuildInputs ? []
 
 , ...} @ args:
 let
   spagoNix =
-    fromYAML (builtins.readFile spagoYamlFile);
-
-  lockFileNix =
-    if builtins.not spago
-    then false
-    else fromYAML (builtins.readFile spagoLockFile);
+    fromYAML (builtins.readFile spagoYaml);
 
   dotSpago =
-    buildDotSpago { inherit spagoNix lockFileNix; symlink = true; };
+    buildDotSpago { inherit spagoYaml lockFile; symlink = false; };
 
   spagoNodeJs =
-    buildSpagoNodeJs { symlink = true; };
+    buildSpagoNodeJs { symlink = false; };
 
   pname =
     if builtins.hasAttr "pname" args

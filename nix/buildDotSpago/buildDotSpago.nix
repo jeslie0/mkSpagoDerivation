@@ -78,9 +78,14 @@ let
 
   dependenciesCommandsList =
     builtins.map
-      (package: ''
-mkdir -p .spago/packages/${package.pname}/${package.version}
-${command} ${package}/* .spago/packages/${package.pname}/${package.version}
+      (package:
+        let
+          cleanedVersion =
+            builtins.head (builtins.match "^v([0-9]*.[0-9]*.[0-9]*)$" package.version);
+        in
+        ''
+mkdir -p .spago/packages/${package.pname}-${cleanedVersion}
+${command} ${package}/* .spago/packages/${package.pname}-${cleanedVersion}
         ''
         )
       (builtins.attrValues allDependencies);
