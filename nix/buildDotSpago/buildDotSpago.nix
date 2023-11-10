@@ -51,7 +51,7 @@ let
         else
           builtins.head (builtins.attrNames packageInfo)
       )
-      spagoNix.package.dependencies;
+      (["psci-support"] ++ spagoNix.package.dependencies);
 
   makePackageAndDepsFunc =
     import "${self}/nix/buildDotSpago/getRegistryDerivation.nix" env spagoNix;
