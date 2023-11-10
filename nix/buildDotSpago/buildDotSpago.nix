@@ -3,7 +3,7 @@
 # This function takes a spagoNix set and builds the .spago directory
 # as a derivation.
 { spagoYaml ? false
-, lockFile ? false
+, spagoLock ? false
 , symlink ? true
 , src
 }:
@@ -13,32 +13,11 @@ let
     then "ln -s"
     else "cp -r";
 
-  buildMethod =
-    (import "${self}/nix/types").buildMethod;
-
-  method =
-    if
-      spagoYaml && !lockFile
-
-    then
-      buildMethod.spago
-
-    else
-      if
-        lockFile
-
-      then
-        buildMethod.lockFile
-
-      else
-        throw
-          "Either a spagoYaml file or a lockFile must be provided.";
-
   spagoNix =
     fromYAML (builtins.readFile spagoYaml);
 
-  lockFileNix =
-    fromYAML (builtins.readFile lockFile);
+  spagoLockNix =
+    fromYAML (builtins.readFile spagoLock);
 
   spagoDirectDeps =
     builtins.map
@@ -91,14 +70,14 @@ ${command} ${package}/* .spago/packages/${package.pname}-${cleanedVersion}
         )
       (builtins.attrValues allDependencies);
 
-  lockFileCommandsList =
+  spagoLockCommandsList =
     builtins.map
       (package: ''
       mkdir -p .spago/packages/${package.pathString};
       ${command} ${package.packageDerivation}/* .spago/packages/${package.pathString};
        ''
       )
-      (import "${self}/nix/buildDotSpago/buildFromLockFile.nix" { inherit fromYAML mkDerivation registry; } { inherit lockFileNix src; });
+      (import "${self}/nix/buildDotSpago/buildFromLockFile.nix" { inherit fromYAML mkDerivation registry; } { inherit spagoLockNix src; });
 
 in
 mkDerivation {
@@ -107,10 +86,10 @@ mkDerivation {
   buildPhase =
     lib.concatStrings (
       if
-        lockFile != false
+        spagoLock != false
 
       then
-        lockFileCommandsList
+        spagoLockCommandsList
 
       else
         dependenciesCommandsList

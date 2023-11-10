@@ -1,0 +1,11 @@
+package:
+  dependencies:
+    - console
+    - effect
+    - halogen
+    - prelude
+    - maybe: "*"
+  name: registry-test
+workspace:
+  package_set:
+    registry: 43.1.0

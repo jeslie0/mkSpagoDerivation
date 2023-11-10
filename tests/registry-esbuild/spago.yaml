@@ -1,0 +1,15 @@
+package:
+  dependencies:
+    - console
+    - effect
+    - halogen
+    - prelude
+    - maybe: "*"
+  name: registry-test
+workspace:
+  backend:
+    cmd: "purs-backend-es"
+    args:
+    - "build"
+  package_set:
+    registry: 43.1.0

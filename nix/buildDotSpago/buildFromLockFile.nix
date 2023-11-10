@@ -1,5 +1,5 @@
 { fromYAML, mkDerivation, registry }:
-{ src, lockFileNix }:
+{ src, spagoLockNix }:
 let
 
   psciSupport = {
@@ -23,10 +23,10 @@ let
   };
 
   packages =
-    if (lockFileNix.packages ? "psci-support")
+    if (spagoLockNix.packages ? "psci-support")
     then
-      lockFileNix.packages
-    else lockFileNix.packages // psciSupport;
+      spagoLockNix.packages
+    else spagoLockNix.packages // psciSupport;
 
   buildDerivationFromRegistry = pname: package:
     let

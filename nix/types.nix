@@ -24,6 +24,6 @@
   # directory.
   buildMethod = {
     spago = 0;
-    lockFile = 1;
+    spagoLock = 1;
   };
 }

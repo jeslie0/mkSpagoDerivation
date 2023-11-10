@@ -1,0 +1,6 @@
+package:
+  dependencies:
+    - console
+    - effect
+    - prelude
+  name: lib1

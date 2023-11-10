@@ -3,7 +3,7 @@
 
 , spagoYaml ? "${src}/spago.yaml"
 
-, lockFile ? false
+, spagoLock ? false
 
 , nativeBuildInputs ? []
 
@@ -13,7 +13,7 @@ let
     fromYAML (builtins.readFile spagoYaml);
 
   dotSpago =
-    buildDotSpago { inherit spagoYaml lockFile src; symlink = false; };
+    buildDotSpago { inherit spagoYaml spagoLock src; symlink = false; };
 
   spagoNodeJs =
     buildSpagoNodeJs { symlink = false; };

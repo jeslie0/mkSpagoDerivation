@@ -103,7 +103,27 @@
 
             fromYAML =
               fromYAMLBuilder pkgs;
+
+            checks = {
+              registry =
+                import ./tests/registry/registry.nix {
+                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                };
+
+              registry-esbuild =
+                import ./tests/registry-esbuild/registry-esbuild.nix {
+                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                  esbuild = pkgs.esbuild;
+                  purs-backend-es = pkgs.purs-backend-es;
+                  purs-unstable = pkgs.purs-unstable;
+                };
+
+              monorepo =
+                import ./tests/monorepo/monorepo.nix {
+                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                };
+            };
+
           }
       );
-
 }
