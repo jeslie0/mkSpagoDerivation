@@ -1,6 +1,8 @@
 name: Update Registry Commits
 run-name: Update the PureScript Registry and Registry-index commits.
 on:
+  push:
+    branches: [ develop ]
   schedule:
     - cron: '0 0 * * 0'
 
