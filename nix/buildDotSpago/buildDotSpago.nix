@@ -5,6 +5,7 @@
 { spagoYaml ? false
 , lockFile ? false
 , symlink ? true
+, src
 }:
 let
   command =
@@ -97,7 +98,7 @@ ${command} ${package}/* .spago/packages/${package.pname}-${cleanedVersion}
       ${command} ${package.packageDerivation}/* .spago/packages/${package.pathString};
        ''
       )
-      (import "${self}/nix/buildDotSpago/buildFromLockFile.nix" { inherit fromYAML mkDerivation; } lockFileNix);
+      (import "${self}/nix/buildDotSpago/buildFromLockFile.nix" { inherit fromYAML mkDerivation registry; } { inherit lockFileNix src; });
 
 in
 mkDerivation {

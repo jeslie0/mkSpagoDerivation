@@ -1,8 +1,32 @@
-{ fromYAML, mkDerivation }:
-lockFileNix:
+{ fromYAML, mkDerivation, registry }:
+{ src, lockFileNix }:
 let
+
+  psciSupport = {
+    "psci-support" = {
+      type =
+        "registry";
+
+      version =
+        "6.0.0";
+
+      integrity =
+        let
+          psciJSON =
+            builtins.fromJSON (builtins.readFile "${registry}/metadata/psci-support.json");
+
+          integrity =
+            psciJSON.published."6.0.0".hash;
+        in
+        integrity;
+    };
+  };
+
   packages =
-    lockFileNix.packages;
+    if (lockFileNix.packages ? "psci-support")
+    then
+      lockFileNix.packages
+    else lockFileNix.packages // psciSupport;
 
   buildDerivationFromRegistry = pname: package:
     let
@@ -12,7 +36,7 @@ let
       version =
         package.version;
 
-      src =
+      remoteSrc =
         builtins.fetchurl {
           url = "https://packages.registry.purescript.org/${pname}/${version}.tar.gz";
           sha256 = integrity;
@@ -21,7 +45,10 @@ let
     in
       { pathString = "${pname}-${version}";
         packageDerivation = mkDerivation {
-          inherit pname version src;
+          inherit pname version;
+          src =
+            remoteSrc;
+
           installPhase =
             "mkdir $out; cp -r * $out";
         };
@@ -35,7 +62,7 @@ let
       rev =
         package.rev;
 
-      src =
+      remoteSrc =
         builtins.fetchGit {
           inherit url rev;
           name = pname;
@@ -49,8 +76,12 @@ let
       { pathString = "${pname}/${rev}";
         packageDerivation =
           mkDerivation {
-            inherit src;
-            name = pname;
+            name =
+              pname;
+
+            src =
+              remoteSrc;
+
             installPhase =
               ''
               mkdir $out
@@ -59,6 +90,28 @@ let
           };
       };
 
+  buildDerivationFromLocalPath =
+    pname: package:
+    let
+      path =
+        package.path;
+
+    in
+      mkDerivation {
+        name =
+          pname;
+
+        src = "${src}/${path}";
+
+        installPhase =
+          ''
+          mkdir $out;
+          cp -r * $out
+          '';
+      };
+
+
+
   buildDerivation = pname: package:
     if package.type == "registry"
     then buildDerivationFromRegistry pname package
@@ -66,8 +119,11 @@ let
       if package.type == "git"
       then buildDerivationFromGit pname package
       else
-        throw
-          "Unable to determine package type ${package.type}.";
+        if package.type == "local"
+        then buildDerivationFromLocalPath pname package
+        else
+            throw
+            "Unable to determine package type ${package.type}.";
 
   derivationList =
     builtins.attrValues (

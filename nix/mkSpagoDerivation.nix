@@ -13,7 +13,7 @@ let
     fromYAML (builtins.readFile spagoYaml);
 
   dotSpago =
-    buildDotSpago { inherit spagoYaml lockFile; symlink = false; };
+    buildDotSpago { inherit spagoYaml lockFile src; symlink = false; };
 
   spagoNodeJs =
     buildSpagoNodeJs { symlink = false; };
