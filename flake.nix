@@ -18,10 +18,7 @@
   outputs = { self, nixpkgs, flake-utils, ps-overlay, registry, registry-index }:
     let
       fromYAMLBuilder = prev:
-        import ./nix/fromYAML.nix {
-          stdenv = prev.stdenv;
-          yaml2json = prev.yaml2json;
-        };
+        import "${ps-overlay}/nix/from-yaml.nix" { lib = prev.lib; };
 
       buildDotSpagoBuilder = prev:
         import ./nix/buildDotSpago/buildDotSpago.nix {
