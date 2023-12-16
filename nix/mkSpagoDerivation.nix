@@ -52,11 +52,11 @@ let
     in
       ''
         runHook preBuild
-        mkdir .spago
-        cp -r ${dotSpago}/.spago .
+        mkdir -p .spago
+        cp -r ${dotSpago}/.spago/* .spago
         export HOME=$(mktemp -d)
-        mkdir $HOME/.cache
-        cp -r ${spagoNodeJs}/* $HOME/.cache
+        mkdir -p $HOME/.cache/spago-nodejs
+        cp -r ${spagoNodeJs}/spago-nodejs/* $HOME/.cache/spago-nodejs
         ${buildCommand}
         runHook postBuild
         '';
