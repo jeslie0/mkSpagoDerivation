@@ -146,7 +146,7 @@ The ~buildPhase~ and ~installPhase~ always run =pre= and =post= hooks, even if t
   A repository and Nix flake that provides lots of PureScript tools.
 - [[https://github.com/purs-nix/purs-nix][purs-nix]]
   A tool for Nix based PureScript development.
-- [[https://github.com/jesli0/mkElmDerivation][mkElmDerivation]]
+- [[https://github.com/jeslie0/mkElmDerivation][mkElmDerivation]]
   A similar tool (that I created) to package [[https://elm-lang.org/][Elm]] applications with Nix.
 
 * License
