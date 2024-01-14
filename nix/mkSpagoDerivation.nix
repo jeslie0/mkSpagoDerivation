@@ -1,4 +1,4 @@
-{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, spago, purs, git, lib }:
+{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, git, lib }:
 { src
 
 , spagoYaml ? "${src}/spago.yaml"
@@ -32,13 +32,6 @@ let
     if builtins.hasAttr "name" args
     then args.name
     else "${pname}${version}";
-
-
-  output =
-    if builtins.hasAttr "build_opts" spagoNix.workspace
-       && builtins.hasAttr "output" spagoNix.workspace.build_opts
-    then spagoNix.workspace.build_opts
-    else "output*";
 
   buildPhase =
     let
@@ -78,7 +71,5 @@ stdenv.mkDerivation (args // {
   inherit name buildPhase installPhase;
   nativeBuildInputs =
     [ (if builtins.hasAttr "git" args then args.git else git)
-      (if builtins.hasAttr "purs" args then args.purs else purs)
-      (if builtins.hasAttr "spago" args then args.spago else spago)
     ] ++ nativeBuildInputs;
 })

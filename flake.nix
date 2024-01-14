@@ -38,15 +38,9 @@
         let
           overlayedPkgs =
             ps-overlay.overlays.default final prev;
-
-          spago =
-            overlayedPkgs.spago-unstable;
-
-          purs =
-            overlayedPkgs.purs;
         in
           import ./nix/mkSpagoDerivation.nix {
-            inherit registry registry-index spago purs;
+            inherit registry registry-index;
             buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
             fromYAML = fromYAMLBuilder prev;
             stdenv = prev.stdenv;
@@ -109,6 +103,8 @@
                 import ./tests/registry/registry.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                   esbuild = pkgs.esbuild;
+                  purs = pkgs.purs-unstable;
+                  spago = pkgs.spago-unstable;
                 };
 
               registry-esbuild =
@@ -116,25 +112,32 @@
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                   esbuild = pkgs.esbuild;
                   purs-backend-es = pkgs.purs-backend-es;
-                  purs-unstable = pkgs.purs-unstable;
+                  purs = pkgs.purs-unstable;
+                  spago = pkgs.spago-unstable;
                 };
 
               monorepo =
                 import ./tests/monorepo/monorepo.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                   esbuild = pkgs.esbuild;
+                  purs = pkgs.purs-unstable;
+                  spago = pkgs.spago-unstable;
                 };
 
               remote-package =
                 import ./tests/remote/remote.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                   esbuild = pkgs.esbuild;
+                  purs = pkgs.purs-unstable;
+                  spago = pkgs.spago-unstable;
                 };
 
               local-package =
                 import ./tests/local/local.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                   esbuild = pkgs.esbuild;
+                  purs = pkgs.purs-unstable;
+                  spago = pkgs.spago-unstable;
                 };
             };
 
