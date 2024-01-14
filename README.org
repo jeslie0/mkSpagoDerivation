@@ -2,7 +2,7 @@
 #+author: James Leslie
 [[https://img.shields.io/badge/built%20for-PureScript-1d222d.svg]][[https://img.shields.io/github/license/jeslie0/mkelmderivation.svg]][[https://img.shields.io/github/actions/workflow/status/jeslie0/mkSpagoDerivation/run_tests.yaml.svg]][[https://img.shields.io/github/v/release/jeslie0/mkSpagoDerivation.svg]]
 
-This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Leveraging [[https://github.com/purescript/registry][PureScript's registry]] and the new [[https://github.com/purescript/spago][spago@next]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.yaml= as a single source of truth for dependencies.
+This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Leveraging [[https://github.com/purescript/registry][PureScript's registry]] and the new [[https://github.com/purescript/spago][spago@next]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.lock= as a single source of truth for dependencies.
 
 * Table of contents                                                     :toc:
 - [[#examples][Examples]]
@@ -16,7 +16,7 @@ This flake provides an unopinionated approach to packaging [[https://github.com/
 * Examples
 The most important function that this flake provides is the ~mkSpagoDerivation~ function, exposed as both an output and via an overlay. This provides a wrapper around ~stdenv.mkDerivation~ which puts all of your project's dependencies in the right place, making it easy for you to build your projects in a reproducible way.
 
-Importantly, a ~spago.yaml~ and a ~spago.lock~ file are required for ~mkSpagoDerivation~ to determine your project's name and dependencies.
+Importantly, a =spago.yaml= and a =spago.lock= file are required for ~mkSpagoDerivation~ to determine your project's name and dependencies.
 
 Here is a simple =flake.nix= that builds a PureScript project.
 #+begin_src nix
@@ -54,7 +54,7 @@ Here is a simple =flake.nix= that builds a PureScript project.
 }
 #+end_src
 
-The only attribute ~mkSpagoDerivation~ requires is ~src~. The ~spagoYaml~ attribute will default to ~${src}/spago.yaml~. Everything else is passed into ~mkDerivation~. There are no assumptions about the which version of the compiler is used - you must specify which copy of spago and purescript you want to use. Dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using the unstable PureScript compiler from the PureScript Overlay.
+The only attribute ~mkSpagoDerivation~ requires is ~src~. The ~spagoYaml~ attribute will default to ~${src}/spago.yaml~ and likewise, ~spagoLock~ defaults to ~${src}/spago.lock~. Everything else is passed into ~mkDerivation~. There are no assumptions about the which version of the compiler is used - you must specify which copy of Spago and PureScript you want to use. Dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using the unstable PureScript compiler from the PureScript Overlay.
 #+begin_src nix
 {
   inputs = {
