@@ -1,30 +1,26 @@
 workspace:
   packages:
-    lib1:
-      path: lib1
+    registry-test:
+      path: ./
       dependencies:
         - console
         - effect
+        - maybe: "*"
         - prelude
       test_dependencies: []
       build_plan:
         - console
+        - control
         - effect
+        - invariant
+        - maybe
+        - newtype
         - prelude
-    main:
-      path: Main
-      dependencies:
-        - console
-        - effect
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - console
-        - effect
-        - prelude
+        - safe-coerce
+        - unsafe-coerce
   package_set:
     address:
-      registry: 43.3.0
+      registry: 43.1.0
     compiler: ">=0.15.10 <0.16.0"
     content:
       abc-parser: 2.0.1
@@ -83,9 +79,8 @@ workspace:
       classless-decode-json: 0.1.1
       classless-encode-json: 0.1.3
       classnames: 2.0.0
-      codec: 6.1.0
+      codec: 6.0.0
       codec-argonaut: 10.0.0
-      codec-json: 1.0.0
       colors: 7.0.1
       concur-core: 0.5.0
       concur-react: 0.5.0
@@ -219,7 +214,6 @@ workspace:
       js-promise-aff: 1.0.0
       js-timers: 6.1.0
       js-uri: 3.1.0
-      json: 1.0.0
       json-codecs: 5.0.0
       justifill: 0.5.0
       jwt: 0.0.9
@@ -486,14 +480,55 @@ packages:
     dependencies:
       - effect
       - prelude
+  control:
+    type: registry
+    version: 6.0.0
+    integrity: sha256-sH7Pg9E96JCPF9PIA6oQ8+BjTyO/BH1ZuE/bOcyj4Jk=
+    dependencies:
+      - newtype
+      - prelude
   effect:
     type: registry
     version: 4.0.0
     integrity: sha256-eBtZu+HZcMa5HilvI6kaDyVX3ji8p0W9MGKy2K4T6+M=
     dependencies:
       - prelude
+  invariant:
+    type: registry
+    version: 6.0.0
+    integrity: sha256-RGWWyYrz0Hs1KjPDA+87Kia67ZFBhfJ5lMGOMCEFoLo=
+    dependencies:
+      - control
+      - prelude
+  maybe:
+    type: registry
+    version: 6.0.0
+    integrity: sha256-5cCIb0wPwbat2PRkQhUeZO0jcAmf8jCt2qE0wbC3v2Q=
+    dependencies:
+      - control
+      - invariant
+      - newtype
+      - prelude
+  newtype:
+    type: registry
+    version: 5.0.0
+    integrity: sha256-gdrQu8oGe9eZE6L3wOI8ql/igOg+zEGB5ITh2g+uttw=
+    dependencies:
+      - prelude
+      - safe-coerce
   prelude:
     type: registry
     version: 6.0.1
     integrity: sha256-o8p6SLYmVPqzXZhQFd2hGAWEwBoXl1swxLG/scpJ0V0=
+    dependencies: []
+  safe-coerce:
+    type: registry
+    version: 2.0.0
+    integrity: sha256-a1ibQkiUcbODbLE/WAq7Ttbbh9ex+x33VCQ7GngKudU=
+    dependencies:
+      - unsafe-coerce
+  unsafe-coerce:
+    type: registry
+    version: 6.0.0
+    integrity: sha256-IqIYW4Vkevn8sI+6aUwRGvd87tVL36BBeOr0cGAE7t0=
     dependencies: []

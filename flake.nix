@@ -21,7 +21,7 @@
         import "${ps-overlay}/nix/from-yaml.nix" { lib = prev.lib; };
 
       buildDotSpagoBuilder = prev:
-        import ./nix/buildDotSpago/buildDotSpago.nix {
+        import ./nix/buildDotSpago.nix {
           inherit self registry registry-index;
           mkDerivation = prev.stdenv.mkDerivation;
           lib = prev.lib;
@@ -47,11 +47,11 @@
         in
           import ./nix/mkSpagoDerivation.nix {
             inherit registry registry-index spago purs;
-            buildDotSpago = buildDotSpagoBuilder prev;
             buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
             fromYAML = fromYAMLBuilder prev;
             stdenv = prev.stdenv;
             git = prev.git;
+            lib = prev.lib;
           };
     in
       {
@@ -108,6 +108,7 @@
               registry =
                 import ./tests/registry/registry.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                  esbuild = pkgs.esbuild;
                 };
 
               registry-esbuild =
@@ -121,6 +122,19 @@
               monorepo =
                 import ./tests/monorepo/monorepo.nix {
                   mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                  esbuild = pkgs.esbuild;
+                };
+
+              remote-package =
+                import ./tests/remote/remote.nix {
+                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                  esbuild = pkgs.esbuild;
+                };
+
+              local-package =
+                import ./tests/local/local.nix {
+                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                  esbuild = pkgs.esbuild;
                 };
             };
 

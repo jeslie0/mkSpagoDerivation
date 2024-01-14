@@ -2,7 +2,6 @@ package:
   dependencies:
     - console
     - effect
-    - halogen
     - prelude
     - maybe: "*"
   name: registry-test

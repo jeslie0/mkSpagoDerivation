@@ -1,5 +1,7 @@
 module Main where
 
+import Prelude
 import Effect.Console as Console
 
-main = Console.log "Lib2"
+main = do
+  Console.log "Lib2"

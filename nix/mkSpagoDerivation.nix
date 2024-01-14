@@ -1,9 +1,9 @@
-{ stdenv, fromYAML, buildDotSpago, buildSpagoNodeJs, registry, registry-index, spago, purs, git }:
+{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, spago, purs, git, lib }:
 { src
 
 , spagoYaml ? "${src}/spago.yaml"
 
-, spagoLock ? false
+, spagoLock ? "${src}/spago.lock"
 
 , nativeBuildInputs ? []
 
@@ -11,9 +11,6 @@
 let
   spagoNix =
     fromYAML (builtins.readFile spagoYaml);
-
-  dotSpago =
-    buildDotSpago { inherit spagoYaml spagoLock src; symlink = false; };
 
   spagoNodeJs =
     buildSpagoNodeJs { symlink = false; };
@@ -48,15 +45,17 @@ let
       buildCommand =
         if builtins.hasAttr "buildPhase" args
         then args.buildPhase
-        else "spago build";
+        else "";
+
+      dotSpagoCommand =
+        import ./buildFromLockFile.nix { inherit fromYAML registry lib; mkDerivation = stdenv.mkDerivation; } { inherit src; spagoLockFile = spagoLock; };
     in
       ''
         runHook preBuild
-        mkdir -p .spago
-        cp -r ${dotSpago}/.spago/* .spago
         export HOME=$(mktemp -d)
         mkdir -p $HOME/.cache/spago-nodejs
         cp -r ${spagoNodeJs}/spago-nodejs/* $HOME/.cache/spago-nodejs
+        ${dotSpagoCommand}
         ${buildCommand}
         runHook postBuild
         '';
@@ -72,8 +71,6 @@ let
     else
       ''
       runHook preInstall
-      mkdir $out
-      cp -r ${output} $out
       runHook postInstall
       '';
 in

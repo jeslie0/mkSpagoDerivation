@@ -1,0 +1,11 @@
+package:
+  name: lib
+  dependencies:
+    - prelude: ">=6.0.1 <7.0.0"
+  publish:
+    version: 0.1.0
+    license: MIT
+workspace:
+  package_set:
+    registry: 47.12.0
+  extra_packages: {}

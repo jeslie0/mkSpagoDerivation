@@ -3,6 +3,4 @@ package:
     - console
     - effect
     - prelude
-    - halogen
-    - lib1
   name: main

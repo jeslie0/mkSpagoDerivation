@@ -1,6 +1,6 @@
 { mkSpagoDerivation, esbuild }:
 mkSpagoDerivation {
-  pname = "registry-test";
+  pname = "remote-package-test";
   version = "0.1.0";
   src = ./.;
   nativeBuildInputs = [ esbuild ];

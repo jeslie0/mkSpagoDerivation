@@ -1,31 +1,16 @@
 workspace:
   packages:
-    lib1:
-      path: lib1
+    lib:
+      path: ./
       dependencies:
-        - console
-        - effect
-        - prelude
+        - prelude: ">=6.0.1 <7.0.0"
       test_dependencies: []
       build_plan:
-        - console
-        - effect
-        - prelude
-    main:
-      path: Main
-      dependencies:
-        - console
-        - effect
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - console
-        - effect
         - prelude
   package_set:
     address:
-      registry: 43.3.0
-    compiler: ">=0.15.10 <0.16.0"
+      registry: 47.12.0
+    compiler: ">=0.15.14 <0.16.0"
     content:
       abc-parser: 2.0.1
       ace: 9.1.0
@@ -51,8 +36,8 @@ workspace:
       arraybuffer: 13.2.0
       arraybuffer-builder: 3.1.0
       arraybuffer-types: 3.0.2
-      arrays: 7.2.1
-      arrays-extra: 0.4.1
+      arrays: 7.3.0
+      arrays-extra: 0.4.4
       arrays-zipper: 2.0.1
       ask: 1.0.0
       assert: 6.0.0
@@ -64,7 +49,7 @@ workspace:
       bifunctors: 6.0.0
       bigints: 7.0.1
       bolson: 0.3.9
-      bookhound: 0.1.3
+      bookhound: 0.1.7
       bower-json: 3.0.0
       call-by-name: 4.0.1
       canvas: 6.0.0
@@ -85,7 +70,7 @@ workspace:
       classnames: 2.0.0
       codec: 6.1.0
       codec-argonaut: 10.0.0
-      codec-json: 1.0.0
+      codec-json: 1.1.0
       colors: 7.0.1
       concur-core: 0.5.0
       concur-react: 0.5.0
@@ -112,7 +97,7 @@ workspace:
       dom-indexed: 12.0.0
       dotenv: 4.0.3
       droplet: 0.6.0
-      dts: 0.2.0
+      dts: 1.0.0
       dual-numbers: 1.0.2
       dynamic-buffer: 3.0.1
       echarts-simple: 0.0.1
@@ -128,14 +113,15 @@ workspace:
       enums: 6.0.1
       env-names: 0.3.4
       error: 2.0.0
+      eta-conversion: 0.3.2
       exceptions: 6.0.0
       exists: 6.0.0
       exitcodes: 4.0.0
       expect-inferred: 3.0.0
       fahrtwind: 2.0.0
       fallback: 0.1.0
-      fast-vect: 1.1.0
-      fetch: 3.0.0
+      fast-vect: 1.2.0
+      fetch: 4.1.0
       fetch-argonaut: 1.0.1
       fetch-core: 5.1.0
       fetch-yoga-json: 1.1.0
@@ -174,7 +160,7 @@ workspace:
       graphs: 8.1.0
       group: 4.1.1
       halogen: 7.0.0
-      halogen-bootstrap5: 2.2.0
+      halogen-bootstrap5: 2.3.1
       halogen-css: 10.0.0
       halogen-echarts-simple: 0.0.4
       halogen-formless: 4.0.3
@@ -185,7 +171,7 @@ workspace:
       halogen-storybook: 2.0.0
       halogen-subscriptions: 2.0.0
       halogen-svg-elems: 8.0.0
-      halogen-typewriter: 1.0.2
+      halogen-typewriter: 1.0.4
       halogen-vdom: 8.0.0
       halogen-vdom-string-renderer: 0.5.0
       heckin: 2.0.1
@@ -211,6 +197,7 @@ workspace:
       js-abort-controller: 1.0.0
       js-bigints: 2.2.1
       js-date: 8.0.0
+      js-fetch: 0.2.1
       js-fileio: 3.0.0
       js-intl: 1.0.4
       js-iterators: 0.1.1
@@ -234,14 +221,17 @@ workspace:
       literals: 1.0.2
       logging: 3.0.0
       logging-journald: 0.4.0
+      lumi-components: 18.0.0
       machines: 7.0.0
       maps-eager: 0.4.1
       marionette: 1.0.0
       marionette-react-basic-hooks: 0.1.1
+      marked: 0.1.0
       matrices: 5.0.1
       matryoshka: 1.0.0
       maybe: 6.0.0
       media-types: 6.0.0
+      meowclient: 1.0.0
       midi: 4.0.0
       milkis: 9.0.0
       minibench: 4.0.1
@@ -266,10 +256,11 @@ workspace:
       nextjs: 0.1.1
       nextui: 0.2.0
       node-buffer: 9.0.0
-      node-child-process: 11.0.0
+      node-child-process: 11.1.0
       node-event-emitter: 3.0.0
-      node-execa: 4.0.1
+      node-execa: 5.0.0
       node-fs: 9.1.0
+      node-glob-basic: 1.3.0
       node-http: 9.1.0
       node-http2: 1.1.1
       node-human-signals: 1.0.0
@@ -297,21 +288,23 @@ workspace:
       open-memoize: 6.1.0
       open-pairing: 6.1.0
       options: 7.0.0
+      optparse: 5.0.1
       ordered-collections: 3.1.1
       ordered-set: 0.4.0
       orders: 6.0.0
+      owoify: 1.2.0
       pairs: 9.0.1
       parallel: 7.0.0
       parsing: 10.2.0
       parsing-dataview: 3.2.4
       partial: 4.0.0
       pathy: 9.0.0
-      pha: 0.11.0
+      pha: 0.13.0
       phaser: 0.7.0
       phylio: 1.1.2
       pipes: 8.0.0
       pirates-charm: 0.0.1
-      pmock: 0.6.0
+      pmock: 0.9.0
       point-free: 1.0.0
       pointed-list: 0.5.1
       polymorphic-vectors: 4.0.0
@@ -345,7 +338,7 @@ workspace:
       react-basic-storybook: 2.0.0
       react-dom: 8.0.0
       react-halo: 3.0.0
-      react-icons: 1.1.1
+      react-icons: 1.1.4
       react-markdown: 0.1.0
       react-testing-library: 4.0.1
       react-virtuoso: 1.0.0
@@ -353,6 +346,7 @@ workspace:
       recharts: 1.1.0
       record: 4.0.0
       record-extra: 5.0.1
+      record-ptional-fields: 0.1.2
       record-studio: 1.0.4
       refs: 6.0.0
       remotedata: 5.0.0
@@ -384,7 +378,7 @@ workspace:
       sparse-matrices: 1.3.0
       sparse-polynomials: 2.0.5
       spec: 7.5.5
-      spec-mocha: 5.0.0
+      spec-mocha: 5.1.0
       spec-quickcheck: 5.0.0
       splitmix: 2.1.0
       ssrs: 1.0.0
@@ -410,6 +404,7 @@ workspace:
       transformation-matrix: 1.0.1
       transformers: 6.0.0
       tree-rose: 4.0.2
+      ts-bridge: 4.0.0
       tuples: 7.0.0
       two-or-more: 1.0.0
       type-equality: 4.0.1
@@ -456,9 +451,10 @@ workspace:
       web-file: 4.0.0
       web-geometry: 0.1.0
       web-html: 4.1.0
-      web-pointerevents: 1.0.0
+      web-pointerevents: 2.0.0
       web-proletarian: 1.0.0
-      web-resize-observer: 2.0.0
+      web-promise: 3.2.0
+      web-resize-observer: 2.1.0
       web-router: 1.0.0
       web-socket: 4.0.0
       web-storage: 5.0.0
@@ -477,21 +473,9 @@ workspace:
       yoga-postgres: 6.0.0
       yoga-tree: 1.0.0
       z3: 0.0.2
+      zipperarray: 2.0.0
   extra_packages: {}
 packages:
-  console:
-    type: registry
-    version: 6.1.0
-    integrity: sha256-CxmAzjgyuGDmt9FZW51VhV6rBPwR6o0YeKUzA9rSzcM=
-    dependencies:
-      - effect
-      - prelude
-  effect:
-    type: registry
-    version: 4.0.0
-    integrity: sha256-eBtZu+HZcMa5HilvI6kaDyVX3ji8p0W9MGKy2K4T6+M=
-    dependencies:
-      - prelude
   prelude:
     type: registry
     version: 6.0.1
