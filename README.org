@@ -100,6 +100,7 @@ It is possible for this repository to not have the most up-to-date registry set.
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    ps-overlay.url = "github:thomashoneyman/purescript-overlay";
     mkSpagoDerivation = {
       url = "github:jeslie0/mkSpagoDerivation";
       inputs = {
@@ -109,26 +110,8 @@ It is possible for this repository to not have the most up-to-date registry set.
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, mkSpagoDerivation }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [ mkSpagoDerivation.overlays.default ];
-        };
-      in
-        {
-          packages.default =
-            pkgs.mkSpagoDerivation {
-              spagoYaml = ./spago.yaml;
-              spagoLock = ./spago.lock;
-              src = ./.;
-              version = "0.1.0";
-            };
-        }
-    );
-}
+  outputs = { self, nixpkgs, flake-utils, ps-overlay, mkSpagoDerivation }:
+  ...
 #+end_src
 
 * Limitations
