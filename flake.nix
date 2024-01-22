@@ -1,9 +1,8 @@
 {
-  description = "A flake providing tools for building purescript projects with spago.";
+  description = "A flake providing tools for building PureScript projects with Spago.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
     ps-overlay.url = "github:thomashoneyman/purescript-overlay";
     registry = {
       url = "github:purescript/registry";
@@ -15,8 +14,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, ps-overlay, registry, registry-index }:
+  outputs = { self, nixpkgs, ps-overlay, registry, registry-index }:
     let
+      supportedSystems =
+        [ "aarch64-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
+
+      forAllSystems =
+        nixpkgs.lib.genAttrs supportedSystems;
+
+      nixpkgsFor = forAllSystems (system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ ps-overlay.overlays.default ];
+        });
+
       fromYAMLBuilder = prev:
         import "${ps-overlay}/nix/from-yaml.nix" { lib = prev.lib; };
 
@@ -35,18 +46,14 @@
         };
 
       mkSpagoDerivationBuilder = final: prev:
-        let
-          overlayedPkgs =
-            ps-overlay.overlays.default final prev;
-        in
-          import ./nix/mkSpagoDerivation.nix {
-            inherit registry registry-index;
-            buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
-            fromYAML = fromYAMLBuilder prev;
-            stdenv = prev.stdenv;
-            git = prev.git;
-            lib = prev.lib;
-          };
+        import ./nix/mkSpagoDerivation.nix {
+          inherit registry registry-index;
+          buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
+          fromYAML = fromYAMLBuilder prev;
+          stdenv = prev.stdenv;
+          git = prev.git;
+          lib = prev.lib;
+        };
     in
       {
         overlays = {
@@ -76,71 +83,54 @@
             fromYAML = fromYAMLBuilder prev;
           };
         };
-      }
-      // flake-utils.lib.eachDefaultSystem (
-        system:
-        let pkgs =
-              import nixpkgs {
-                inherit system;
-                overlays = [ ps-overlay.overlays.default ];
-              };
-        in
+
+        checks = forAllSystems (system:
+          let
+            pkgs =
+              nixpkgsFor.${system};
+          in
           {
-            buildDotSpago =
-              buildDotSpagoBuilder pkgs;
-
-            buildSpagoNodeJs =
-              buildSpagoNodeJsBuilder pkgs;
-
-            mkSpagoDerivation =
-              mkSpagoDerivationBuilder pkgs pkgs;
-
-            fromYAML =
-              fromYAMLBuilder pkgs;
-
-            checks = {
-              registry =
-                import ./tests/registry/registry.nix {
-                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-                  esbuild = pkgs.esbuild;
-                  purs = pkgs.purs-unstable;
-                  spago = pkgs.spago-unstable;
-                };
-
-              registry-esbuild =
-                import ./tests/registry-esbuild/registry-esbuild.nix {
-                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-                  esbuild = pkgs.esbuild;
-                  purs-backend-es = pkgs.purs-backend-es;
-                  purs = pkgs.purs-unstable;
-                  spago = pkgs.spago-unstable;
-                };
-
-              monorepo =
-                import ./tests/monorepo/monorepo.nix {
-                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-                  esbuild = pkgs.esbuild;
-                  purs = pkgs.purs-unstable;
-                  spago = pkgs.spago-unstable;
-                };
-
-              remote-package =
-                import ./tests/remote/remote.nix {
-                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-                  esbuild = pkgs.esbuild;
-                  purs = pkgs.purs-unstable;
-                  spago = pkgs.spago-unstable;
-                };
-
-              local-package =
-                import ./tests/local/local.nix {
-                  mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-                  esbuild = pkgs.esbuild;
-                  purs = pkgs.purs-unstable;
-                  spago = pkgs.spago-unstable;
-                };
+          registry =
+            import ./tests/registry/registry.nix {
+              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+              esbuild = pkgs.esbuild;
+              purs = pkgs.purs-unstable;
+              spago = pkgs.spago-unstable;
             };
 
+          registry-esbuild =
+            import ./tests/registry-esbuild/registry-esbuild.nix {
+              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+              esbuild = pkgs.esbuild;
+              purs-backend-es = pkgs.purs-backend-es;
+              purs = pkgs.purs-unstable;
+              spago = pkgs.spago-unstable;
+            };
+
+          monorepo =
+            import ./tests/monorepo/monorepo.nix {
+              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+              esbuild = pkgs.esbuild;
+              purs = pkgs.purs-unstable;
+              spago = pkgs.spago-unstable;
+            };
+
+          remote-package =
+            import ./tests/remote/remote.nix {
+              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+              esbuild = pkgs.esbuild;
+              purs = pkgs.purs-unstable;
+              spago = pkgs.spago-unstable;
+            };
+
+          local-package =
+            import ./tests/local/local.nix {
+              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+              esbuild = pkgs.esbuild;
+              purs = pkgs.purs-unstable;
+              spago = pkgs.spago-unstable;
+            };
           }
-      );
+        );
+      };
 }

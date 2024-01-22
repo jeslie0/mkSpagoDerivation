@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.1] (pre) - 2024-01-22
+_notice_
+
+### Changed
+
+-
+-
+-
+
+### Added
+
+-
+-
+-
+
+### Removed
+
+- Removed flake dependency of flake-utils, in favour of nixpkgs based solution ([#2](https://github.com/jeslie0/mkSpagoDerivation/issues/2)).
+-
+-
+
+### Fixed
 ## [0.2.0] - 2024-01-14
 
 _This release brings breaking changes that makes the usage of `mkSpagoDerivation` more consistent._
