@@ -8,7 +8,7 @@ mkDerivation {
     src;
 
   buildPhase =
-    import ./buildFromLockFile.nix { inherit fromYAML mkDerivation registry lib; symlink = false; } { inherit src; spagoLockFile = spagoLock; };
+    import ./buildFromLockFile.nix { inherit fromYAML mkDerivation registry lib; } { inherit src; spagoLockFile = spagoLock; };
 
   installPhase =
     ''

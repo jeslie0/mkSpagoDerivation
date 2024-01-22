@@ -130,6 +130,11 @@
               purs = pkgs.purs-unstable;
               spago = pkgs.spago-unstable;
             };
+
+          mkDotSpago =
+            import ./tests/mkDotSpago/mkDotSpago.nix {
+              buildDotSpago = buildDotSpagoBuilder pkgs;
+            };
           }
         );
       };

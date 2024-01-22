@@ -11,7 +11,7 @@ _notice_
 
 ### Added
 
--
+- Add a symlink `.spago/p -> .spago/packages` to make derivation work with newer versions of spago.
 -
 -
 

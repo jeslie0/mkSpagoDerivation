@@ -177,5 +177,11 @@ let
     lib.concatMapStrings
       localPackageBuildString
       (builtins.attrValues formattedPackageSet.localPackages);
+
+  # TODO This should be removed at some point. Recent updates to Spago
+  # mean that ".spago/p" is now used, rather than
+  # ".spago/packages". This makes it uniform between the two.
+  extraCommand =
+    "cd .spago; ln -s packages p; cd ..";
 in
-builtins.concatStringsSep "\n" [registryPackageCommand gitPackageCommand localPackageCommand]
+builtins.concatStringsSep "\n" [ registryPackageCommand gitPackageCommand localPackageCommand extraCommand ]
