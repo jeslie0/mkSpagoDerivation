@@ -69,11 +69,6 @@ let
         builtins.fetchGit {
           inherit url rev name;
         };
-
-      subdir =
-        if package ? "subdir"
-        then "${package.subdir}/*"
-        else "*";
     in
       {
         pathString =
@@ -89,7 +84,7 @@ let
             installPhase =
               ''
               mkdir $out
-              cp -r ${subdir} $out
+              cp -r * $out
               '';
           };
       };

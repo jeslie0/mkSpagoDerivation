@@ -90,51 +90,51 @@
               nixpkgsFor.${system};
           in
           {
-          registry =
-            import ./tests/registry/registry.nix {
-              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-              esbuild = pkgs.esbuild;
-              purs = pkgs.purs-unstable;
-              spago = pkgs.spago-unstable;
-            };
+            registry =
+              import ./tests/registry/registry.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+              };
 
-          registry-esbuild =
-            import ./tests/registry-esbuild/registry-esbuild.nix {
-              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-              esbuild = pkgs.esbuild;
-              purs-backend-es = pkgs.purs-backend-es;
-              purs = pkgs.purs-unstable;
-              spago = pkgs.spago-unstable;
-            };
+            registry-esbuild =
+              import ./tests/registry-esbuild/registry-esbuild.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs-backend-es = pkgs.purs-backend-es;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+              };
 
-          monorepo =
-            import ./tests/monorepo/monorepo.nix {
-              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-              esbuild = pkgs.esbuild;
-              purs = pkgs.purs-unstable;
-              spago = pkgs.spago-unstable;
-            };
+            monorepo =
+              import ./tests/monorepo/monorepo.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+              };
 
-          remote-package =
-            import ./tests/remote/remote.nix {
-              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-              esbuild = pkgs.esbuild;
-              purs = pkgs.purs-unstable;
-              spago = pkgs.spago-unstable;
-            };
+            remote-package =
+              import ./tests/remote/remote.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+              };
 
-          local-package =
-            import ./tests/local/local.nix {
-              mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
-              esbuild = pkgs.esbuild;
-              purs = pkgs.purs-unstable;
-              spago = pkgs.spago-unstable;
-            };
+            local-package =
+              import ./tests/local/local.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+              };
 
-          mkDotSpago =
-            import ./tests/mkDotSpago/mkDotSpago.nix {
-              buildDotSpago = buildDotSpagoBuilder pkgs;
-            };
+            mkDotSpago =
+              import ./tests/mkDotSpago/mkDotSpago.nix {
+                buildDotSpago = buildDotSpagoBuilder pkgs;
+              };
           }
         );
       };
