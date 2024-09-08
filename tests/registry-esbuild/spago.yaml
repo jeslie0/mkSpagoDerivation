@@ -10,5 +10,5 @@ workspace:
     cmd: "purs-backend-es"
     args:
     - "build"
-  package_set:
+  packageSet:
     registry: 43.1.0

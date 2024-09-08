@@ -2,49 +2,52 @@ workspace:
   packages:
     remote-package-test:
       path: ./
-      dependencies:
-        - console
-        - effect
-        - fft-js
-        - maybe: "*"
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - arrays
-        - bifunctors
-        - cartesian
-        - console
-        - const
-        - contravariant
-        - control
-        - distributive
-        - effect
-        - either
-        - exists
-        - fft-js
-        - foldable-traversable
-        - functions
-        - functors
-        - identity
-        - integers
-        - invariant
-        - maybe
-        - newtype
-        - nonempty
-        - numbers
-        - orders
-        - partial
-        - prelude
-        - profunctor
-        - psci-support
-        - refs
-        - safe-coerce
-        - st
-        - tailrec
-        - tuples
-        - type-equality
-        - unfoldable
-        - unsafe-coerce
+      core:
+        dependencies:
+          - console
+          - effect
+          - fft-js
+          - maybe: "*"
+          - prelude
+        build_plan:
+          - arrays
+          - bifunctors
+          - cartesian
+          - console
+          - const
+          - contravariant
+          - control
+          - distributive
+          - effect
+          - either
+          - exists
+          - fft-js
+          - foldable-traversable
+          - functions
+          - functors
+          - identity
+          - integers
+          - invariant
+          - maybe
+          - newtype
+          - nonempty
+          - numbers
+          - orders
+          - partial
+          - prelude
+          - profunctor
+          - psci-support
+          - refs
+          - safe-coerce
+          - st
+          - tailrec
+          - tuples
+          - type-equality
+          - unfoldable
+          - unsafe-coerce
+      test:
+        dependencies: []
+        build_plan: []
   package_set:
     address:
       registry: 43.1.0

@@ -1,5 +1,5 @@
 workspace:
   lock: true
-  extra_packages: {}
-  package_set:
+  extraPackages: {}
+  packageSet:
     registry: 43.3.0

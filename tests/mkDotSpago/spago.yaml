@@ -7,9 +7,9 @@ package:
     - prelude
     - maybe: "*"
 workspace:
-  package_set:
+  packageSet:
     registry: 43.1.0
-  extra_packages:
+  extraPackages:
     fft-js:
       git: "https://github.com/jeslie0/purescript-fft-js.git"
       ref: "a1d19ae08f577b2a777613566e403b3455c5bb64"

@@ -6,5 +6,5 @@ package:
     - maybe: "*"
   name: registry-test
 workspace:
-  package_set:
+  packageSet:
     registry: 43.1.0

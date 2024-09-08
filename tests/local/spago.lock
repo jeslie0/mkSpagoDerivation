@@ -2,25 +2,28 @@ workspace:
   packages:
     local-package-test:
       path: ./
-      dependencies:
-        - console
-        - effect
-        - lib
-        - maybe: "*"
-        - prelude
-      test_dependencies: []
-      build_plan:
-        - console
-        - control
-        - effect
-        - invariant
-        - lib
-        - maybe
-        - newtype
-        - prelude
-        - safe-coerce
-        - unsafe-coerce
-  package_set:
+      core:
+        dependencies:
+          - console
+          - effect
+          - lib
+          - maybe: "*"
+          - prelude
+        build_plan:
+          - console
+          - control
+          - effect
+          - invariant
+          - lib
+          - maybe
+          - newtype
+          - prelude
+          - safe-coerce
+          - unsafe-coerce
+      test:
+        dependencies: []
+        build_plan: []
+  packageSet:
     address:
       registry: 43.1.0
     compiler: ">=0.15.10 <0.16.0"
@@ -473,7 +476,7 @@ workspace:
       yoga-postgres: 6.0.0
       yoga-tree: 1.0.0
       z3: 0.0.2
-  extra_packages:
+  extraPackages:
     lib:
       path: ./lib
 packages:

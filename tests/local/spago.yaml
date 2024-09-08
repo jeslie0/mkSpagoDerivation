@@ -7,8 +7,8 @@ package:
     - prelude
     - maybe: "*"
 workspace:
-  package_set:
+  packageSet:
     registry: 43.1.0
-  extra_packages:
+  extraPackages:
     lib:
       path: ./lib
