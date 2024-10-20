@@ -1,4 +1,4 @@
-{ self, lib, fromYAML, mkDerivation, registry, registry-index }:
+{ self, lib, mkDerivation, registry, registry-index }:
 { spagoLock, src }:
 mkDerivation {
   name =
@@ -8,7 +8,7 @@ mkDerivation {
     src;
 
   buildPhase =
-    import ./buildFromLockFile.nix { inherit fromYAML mkDerivation registry lib; } { inherit src; spagoLockFile = spagoLock; };
+    import ./buildFromLockFile.nix { inherit mkDerivation registry lib; } { inherit src; spagoLockFile = spagoLock; };
 
   installPhase =
     ''

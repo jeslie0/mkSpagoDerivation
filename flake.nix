@@ -28,6 +28,7 @@
           overlays = [ ps-overlay.overlays.default ];
         });
 
+      # Needed to extract package name from spago.yaml file.
       fromYAMLBuilder = prev:
         import "${ps-overlay}/nix/from-yaml.nix" { lib = prev.lib; };
 
@@ -36,7 +37,6 @@
           inherit self registry registry-index;
           mkDerivation = prev.stdenv.mkDerivation;
           lib = prev.lib;
-          fromYAML = fromYAMLBuilder prev;
         };
 
       buildSpagoNodeJsBuilder = prev:

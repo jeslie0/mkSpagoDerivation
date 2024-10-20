@@ -1,8 +1,8 @@
-{ fromYAML, mkDerivation, registry, lib }:
+{ mkDerivation, registry, lib }:
 { src, spagoLockFile }:
 let
   lockFileNix =
-    fromYAML (builtins.readFile spagoLockFile);
+    builtins.fromJSON (builtins.readFile spagoLockFile);
 
   packageSet =
     lockFileNix.packages;

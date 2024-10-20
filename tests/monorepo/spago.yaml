@@ -1,5 +1,4 @@
 workspace:
-  lock: true
   extraPackages: {}
   packageSet:
     registry: 43.3.0

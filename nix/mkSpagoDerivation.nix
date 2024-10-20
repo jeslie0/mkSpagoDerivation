@@ -41,7 +41,7 @@ let
         else "";
 
       dotSpagoCommand =
-        import ./buildFromLockFile.nix { inherit fromYAML registry lib; mkDerivation = stdenv.mkDerivation; } { inherit src; spagoLockFile = spagoLock; };
+        import ./buildFromLockFile.nix { inherit registry lib; mkDerivation = stdenv.mkDerivation; } { inherit src; spagoLockFile = spagoLock; };
     in
       ''
         runHook preBuild
