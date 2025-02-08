@@ -2,7 +2,7 @@
 #+author: James Leslie
 [[https://img.shields.io/badge/built%20for-PureScript-1d222d.svg]][[https://img.shields.io/github/license/jeslie0/mkelmderivation.svg]][[https://img.shields.io/github/actions/workflow/status/jeslie0/mkSpagoDerivation/run_tests.yaml.svg]][[https://img.shields.io/github/v/release/jeslie0/mkSpagoDerivation.svg]]
 
-This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Leveraging [[https://github.com/purescript/registry][PureScript's registry]] and the new [[https://github.com/purescript/spago][spago@next]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.lock= as a single source of truth for dependencies.
+This flake provides an unopinionated approach to packaging [[https://github.com/purescript/purescript][PureScript]] projects with the [[https://github.com/NixOS/nixpkgs][Nix]] package manager. Utilising [[https://github.com/purescript/registry][PureScript's registry]] and the new [[https://github.com/purescript/spago][spago@next]], this repository facilitates the creation of reproducible builds for PureScript projects with minimal complexity. This works by treating a PureScript project's =spago.lock= as a single source of truth for dependencies.
 
 * Table of contents                                                     :toc:
 - [[#examples][Examples]]
