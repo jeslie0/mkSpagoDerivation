@@ -28,7 +28,7 @@ Here is a simple =flake.nix= that builds a PureScript project.
     ps-overlay.url = "github:thomashoneyman/purescript-overlay";
   };
 
-  outputs = { self, nixpkgs, flake-utils, mkSpagoDerivation }:
+  outputs = { self, nixpkgs, flake-utils, mkSpagoDerivation, ps-overlay }:
     flake-utils.lib.eachDefaultSystem (
       system:
       let
