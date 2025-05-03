@@ -1,5 +1,5 @@
 { mkDerivation, registry, lib }:
-{ src, spagoLockFile }:
+{ spagoLockFile }:
 let
   lockFileNix =
     builtins.fromJSON (builtins.readFile spagoLockFile);

@@ -1,14 +1,14 @@
 { self, lib, mkDerivation, registry, registry-index }:
-{ spagoLock, src }:
+{ spagoLock }:
 mkDerivation {
   name =
     "dot-spago";
 
   src =
-    src;
+    ./.;
 
   buildPhase =
-    import ./buildFromLockFile.nix { inherit mkDerivation registry lib; } { inherit src; spagoLockFile = spagoLock; };
+    import ./buildFromLockFile.nix { inherit mkDerivation registry lib; } { spagoLockFile = spagoLock; };
 
   installPhase =
     ''

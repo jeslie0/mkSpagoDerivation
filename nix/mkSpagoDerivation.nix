@@ -46,7 +46,7 @@ let
         import ./buildFromLockFile.nix {
           inherit registry lib;
           mkDerivation = stdenv.mkDerivation;
-        } { inherit src; spagoLockFile = spagoLock; };
+        } { spagoLockFile = spagoLock; };
 
       buildNpmPackageCommand = 
         let nodeModules =
