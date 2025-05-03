@@ -1,0 +1,12 @@
+package:
+  name: local-package-test
+  dependencies:
+    - apexcharts
+    - prelude
+workspace:
+  packageSet:
+    registry: 55.1.0
+  extraPackages:
+    apexcharts:
+      git: "https://github.com/jeslie0/purescript-apexcharts"
+      ref: "6ff396a08e5ec59b8fd8221942ad684af67be282"

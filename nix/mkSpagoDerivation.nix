@@ -1,4 +1,4 @@
-{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, git, lib }:
+{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, git, lib, importNpmLock }:
 { src
 
 , spagoYaml ? "${src}/spago.yaml"
@@ -6,6 +6,8 @@
 , spagoLock ? "${src}/spago.lock"
 
 , nativeBuildInputs ? []
+
+, buildNodeModulesArgs ? null
 
 , ...} @ args:
 let
@@ -41,13 +43,28 @@ let
         else "";
 
       dotSpagoCommand =
-        import ./buildFromLockFile.nix { inherit registry lib; mkDerivation = stdenv.mkDerivation; } { inherit src; spagoLockFile = spagoLock; };
+        import ./buildFromLockFile.nix {
+          inherit registry lib;
+          mkDerivation = stdenv.mkDerivation;
+        } { inherit src; spagoLockFile = spagoLock; };
+
+      buildNpmPackageCommand = 
+        let nodeModules =
+              importNpmLock.buildNodeModules buildNodeModulesArgs;
+        in
+          if buildNodeModulesArgs == null
+          then ""
+          else
+            ''
+            cp -r ${nodeModules}/node_modules .
+            '';
     in
       ''
         runHook preBuild
         export HOME=$(mktemp -d)
         mkdir -p $HOME/.cache/spago-nodejs
         cp -r ${spagoNodeJs}/spago-nodejs/* $HOME/.cache/spago-nodejs
+        ${buildNpmPackageCommand}
         ${dotSpagoCommand}
         ${buildCommand}
         runHook postBuild
@@ -66,8 +83,11 @@ let
       runHook preInstall
       runHook postInstall
       '';
+
+  cleanedArgs =
+    builtins.removeAttrs args [ "buildNodeModulesArgs"];
 in
-stdenv.mkDerivation (args // {
+stdenv.mkDerivation (cleanedArgs // {
   inherit name buildPhase installPhase;
   nativeBuildInputs =
     [ (if builtins.hasAttr "git" args then args.git else git)

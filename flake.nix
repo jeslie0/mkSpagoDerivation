@@ -53,6 +53,7 @@
           stdenv = prev.stdenv;
           git = prev.git;
           lib = prev.lib;
+          importNpmLock = prev.importNpmLock;
         };
     in
       {
@@ -134,6 +135,17 @@
             mkDotSpago =
               import ./tests/mkDotSpago/mkDotSpago.nix {
                 buildDotSpago = buildDotSpagoBuilder pkgs;
+              };
+
+            useNodeModules =
+              import ./tests/nodeModulesTest/nodeModulesTest.nix {
+                inherit self;
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs-unstable;
+                spago = pkgs.spago-unstable;
+                nodejs = pkgs.nodejs;
+                pkgs = pkgs;
               };
           }
         );

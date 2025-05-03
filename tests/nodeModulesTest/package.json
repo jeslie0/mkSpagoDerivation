@@ -1,0 +1,14 @@
+{
+  "name": "nodemodulestest",
+  "version": "1.0.0",
+  "description": "Test to build node modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apexcharts": "^4.7.0"
+  }
+}
