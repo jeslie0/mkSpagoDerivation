@@ -60,7 +60,7 @@ Here is a simple =flake.nix= that builds a PureScript project.
 
 The only attribute ~mkSpagoDerivation~ requires is ~src~. The ~spagoYaml~ attribute will default to =${src}/spago.yaml= and likewise, ~spagoLock~ defaults to =${src}/spago.lock=. Everything else is passed into ~mkDerivation~.
 
-Some Spago projects require node dependencies. To automatically take care of that, the ~buildNodeModulesArgs~
+Some Spago projects have dependencies from NPM. To automatically take care of fetching NPM packages, the ~buildNodeModulesArgs~
 attribute allows specifing an argument set that is passed to the [[https://nixos.org/manual/nixpkgs/unstable/#javascript-buildNpmPackage-importNpmLock.buildNodeModules][importNpmLock.buildNodeModules]] function. This will build a =node_modules= directory for use in the derivation. See the [[./tests/nodeModulesTest][nodeModulesTest]] for an example. This attribute is completely optional and can be left out of the =mkSpagoDerivation= arguments if no ~node_modules~ directory is required. 
 
 There are no assumptions about the which version of the compiler is used - you must specify which copy of Spago and PureScript you want to use. Dependencies can be added through ~buildInputs~ or ~nativeBuildInputs~. The following example demonstrates this, by using [[https://github.com/aristanetworks/purescript-backend-optimizer][purescript-backend-optimizer]] and using the unstable PureScript compiler from the PureScript Overlay.
