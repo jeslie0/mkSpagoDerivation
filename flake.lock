@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1765472234,
-        "narHash": "sha256-9VvC20PJPsleGMewwcWYKGzDIyjckEz8uWmT0vCDYK0=",
+        "lastModified": 1766070988,
+        "narHash": "sha256-G/WVghka6c4bAzMhTwT2vjLccg/awmHkdKSd2JrycLc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "2fbfb1d73d239d2402a8fe03963e37aab15abe8b",
+        "rev": "c6245e83d836d0433170a16eb185cefe0572f8b8",
         "type": "github"
       },
       "original": {
@@ -34,11 +34,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1765311797,
-        "narHash": "sha256-mSD5Ob7a+T2RNjvPvOA1dkJHGVrNVl8ZOrAwBjKBDQo=",
+        "lastModified": 1765762245,
+        "narHash": "sha256-3iXM/zTqEskWtmZs3gqNiVtRTsEjYAedIaLL0mSBsrk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "09eb77e94fa25202af8f3e81ddc7353d9970ac1b",
+        "rev": "c8cfcd6ccd422e41cc631a0b73ed4d5a925c393d",
         "type": "github"
       },
       "original": {
@@ -51,15 +51,14 @@
     "ps-overlay": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "nixpkgs": "nixpkgs_2",
-        "slimlock": "slimlock"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1765583298,
-        "narHash": "sha256-swRH04eEmVv+QrujS/tcI9Roc5/nURrqXPCjXqRNv+M=",
+        "lastModified": 1765940228,
+        "narHash": "sha256-G21SwmQsdMLfBIyhLtlPiAHkqOSJzNXTqnFGtMYGxAU=",
         "owner": "thomashoneyman",
         "repo": "purescript-overlay",
-        "rev": "d7ed2f4e30d39ceabe9689eed1b1686d9a11e2ca",
+        "rev": "acca6cfb1b9605b8755b238285fe69ee4090a510",
         "type": "github"
       },
       "original": {
@@ -71,11 +70,11 @@
     "registry": {
       "flake": false,
       "locked": {
-        "lastModified": 1765525628,
-        "narHash": "sha256-4rCdrbra+bGBO71EFRspM3IXYzYNvgCy2xhLeKcmWlc=",
+        "lastModified": 1766216452,
+        "narHash": "sha256-+5SV9F5o1YnMUF5Cm4xtr+Afw1NYwAQLppTimgpS6yM=",
         "owner": "purescript",
         "repo": "registry",
-        "rev": "af527720cf7532f1d7b697128538ff380a5cbc65",
+        "rev": "8d743a97a1b7f9af4984729fcb6e37e46d9ea2d7",
         "type": "github"
       },
       "original": {
@@ -87,11 +86,11 @@
     "registry-index": {
       "flake": false,
       "locked": {
-        "lastModified": 1765509361,
-        "narHash": "sha256-DmEZbenEc+h4iRx5Ma0LwuRLEoqNHYbxZkWlNC4EBMI=",
+        "lastModified": 1766181064,
+        "narHash": "sha256-hjH1ZNf46Ic7JUdGUgZC2OaXpUhkq0Hw1g+xIu2uLvs=",
         "owner": "purescript",
         "repo": "registry-index",
-        "rev": "8931198ed87def899492f9b43bf962412b9479c2",
+        "rev": "33cdea20e731a0a5d64eee407d103c33d1e092c9",
         "type": "github"
       },
       "original": {
@@ -106,27 +105,6 @@
         "ps-overlay": "ps-overlay",
         "registry": "registry",
         "registry-index": "registry-index"
-      }
-    },
-    "slimlock": {
-      "inputs": {
-        "nixpkgs": [
-          "ps-overlay",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746029857,
-        "narHash": "sha256-431slzM10HQixP4oQlCwGxUPD8wo4DWVGnIcttqyeEs=",
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "rev": "c49740738a026a00ab6be19300e8cf7b6de03fd7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thomashoneyman",
-        "repo": "slimlock",
-        "type": "github"
       }
     }
   },
