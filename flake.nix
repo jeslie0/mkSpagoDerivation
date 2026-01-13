@@ -30,7 +30,7 @@
 
       # Needed to extract package name from spago.yaml file.
       fromYAMLBuilder = prev:
-        import "${ps-overlay}/nix/from-yaml.nix" { lib = prev.lib; };
+        import "${self}/nix/fromYAML.nix" { lib = prev.lib; };
 
       buildDotSpagoBuilder = prev:
         import ./nix/buildDotSpago.nix {
