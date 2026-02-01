@@ -54,11 +54,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1769957954,
-        "narHash": "sha256-sqfgw+kx8rDUkHOtNtU2zcA1eSm15B8i9UL58FzG+2I=",
+        "lastModified": 1769971816,
+        "narHash": "sha256-6WdiHwc7cM07ttMh3JQslHzmwL9+RaDvf2OwZ0bsWu0=",
         "owner": "thomashoneyman",
         "repo": "purescript-overlay",
-        "rev": "2d7523a8e4f36b3c877bc5e345cfe78083bfc392",
+        "rev": "af71d25ea276b03c46e79cf6ef59edd0a938dfd3",
         "type": "github"
       },
       "original": {
@@ -70,11 +70,11 @@
     "registry": {
       "flake": false,
       "locked": {
-        "lastModified": 1769956295,
-        "narHash": "sha256-tIbqX9KdPjepN1s8CsEZfiI/naoHU2ix0Ii3zs6+xqE=",
+        "lastModified": 1769978430,
+        "narHash": "sha256-yJeEqQ90WrE3HKbKHlz05a3DKzosOLzAIgMUB4kQ52k=",
         "owner": "purescript",
         "repo": "registry",
-        "rev": "8da5785b3e7e98d0393e5b2742d15fc067031cb1",
+        "rev": "035eb90dede1abfa17852ce38570493b8ce2a97d",
         "type": "github"
       },
       "original": {
@@ -86,11 +86,11 @@
     "registry-index": {
       "flake": false,
       "locked": {
-        "lastModified": 1769955729,
-        "narHash": "sha256-6gdd0uwh+XBenivsan6st9B2nOjkJQzyGT1LqVLTxq0=",
+        "lastModified": 1769970350,
+        "narHash": "sha256-HufWeOiEAF5EvNKFwGEeQ0V39vkwIDV9D/78E0qSXC0=",
         "owner": "purescript",
         "repo": "registry-index",
-        "rev": "ca6e9a99e8f1f44d1d1e97bc6f9120f6cace1aaf",
+        "rev": "053ba7ee03f870fd5b2cb978e275cb4865b0b1e6",
         "type": "github"
       },
       "original": {

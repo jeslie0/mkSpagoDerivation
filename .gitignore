@@ -1,2 +1,4 @@
 result
 /tests/registry/output/
+/tests/cache/.spago/
+/tests/cache/output/

@@ -6,6 +6,7 @@ This flake provides an unopinionated approach to packaging [[https://github.com/
 
 * Table of contents                                                     :toc:
 - [[#examples][Examples]]
+- [[#caching-dependency-build-artefacts][Caching dependency build artefacts]]
 - [[#out-of-date-registry][Out of date registry]]
 - [[#limitations][Limitations]]
 - [[#notes][Notes]]
@@ -101,6 +102,9 @@ There are no assumptions about the which version of the compiler is used - you m
 #+end_src
 
 Some other useful functions are exposed. One is ~buildDotSpago~, which builds a project's =.spago= directory. It takes an attribute set ~{ spagoLock, src }~, which respectively are the paths to the project's ~spago.lock~ and the root of the project. Another useful function is ~buildSpagoNodeJs~, which builds the =spago-nodejs= directory, typically located in the user's =.cache= directory.
+
+* Caching dependency build artefacts
+mkSpagoDerivation is unopinionated and allows for a user to customise the way they build their projects. As projects get larger and require more dependencies, rebuilding all of them can add a lot of wasted time to nix builds. Spago does allow for caching the build artefacts for a project's dependencies and this can be integrated into a nix build. The general approach is to create a separate derivation that whose source is only the =spago.yaml= and =spago.lock= files, using ~spago install~ as the build phase. An example of this can be found in the [[file:tests/cache/default.nix][cache test]].
 
 * Out of date registry
 It is possible for this repository to not have the most up-to-date registry set. If you cant wait for the GitHub action to update this repository, you can override the =registry= and =registry-index= inputs to this flake.

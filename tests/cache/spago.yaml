@@ -1,0 +1,71 @@
+package:
+  name: web
+  dependencies:
+    - apexcharts
+    - arraybuffer-builder
+    - bifunctors
+    - console
+    - datetime
+    - debug
+    - deku-core
+    - deku-css
+    - deku-dom
+    - effect
+    - enums
+    - fetch
+    - formatters
+    - js-timers
+    - maybe
+    - numbers
+    - ordered-collections
+    - parsing-dataview
+    - prelude
+    - protobuf
+    - random
+    - st
+    - web-socket
+    - yoga-json
+workspace:
+  packageSet:
+    registry: 60.0.0
+  extraPackages:
+    deku-core:
+      git: https://github.com/mikesol/purescript-deku.git
+      ref: 6b7c392da7782fe0f2e34811e36b11e630e10b26
+      subdir: deku-core
+
+    deku-css:
+      git: https://github.com/mikesol/purescript-deku.git
+      ref: 6b7c392da7782fe0f2e34811e36b11e630e10b26
+      subdir: deku-css
+
+    deku-dom:
+      git: https://github.com/mikesol/purescript-deku.git
+      ref: 6b7c392da7782fe0f2e34811e36b11e630e10b26
+      subdir: deku-dom
+
+    hyrule:
+      git: "https://github.com/mikesol/purescript-hyrule.git"
+      ref: "f508363b9ad7e2389ea8b3433f7e2ee1b1f8fa25"
+      dependencies:
+        - effect
+        - js-timers
+        - web-html
+        - unsafe-reference
+        - web-uievents
+        - avar
+
+    bolson:
+      git: "https://github.com/mikesol/purescript-bolson.git"
+      ref: "d87900c"
+      dependencies:
+        - hyrule
+
+    protobuf:
+      git: "https://github.com/rowtype-yoga/purescript-protobuf"
+      ref: "610ef795387663a90ce372338aa91e29d3d5a434"
+      subdir: library
+
+    apexcharts:
+      git: "https://github.com/jeslie0/purescript-apexcharts"
+      ref: "6ff396a08e5ec59b8fd8221942ad684af67be282"

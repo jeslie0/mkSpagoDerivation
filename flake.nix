@@ -147,6 +147,14 @@
                 nodejs = pkgs.nodejs;
                 pkgs = pkgs;
               };
+
+            cache =
+              import ./tests/cache/default.nix {
+                mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
+                esbuild = pkgs.esbuild;
+                purs = pkgs.purs;
+                spago = pkgs.spago;
+              };
           }
         );
       };
