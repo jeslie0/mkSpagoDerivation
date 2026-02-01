@@ -15,7 +15,7 @@ let
       # src =
       #   nix-filter {
       #     root =
-      #       "${self}/software/web";
+      #       ./.;
 
       #     include =
       #       ["spago.yaml" "spago.lock"];
