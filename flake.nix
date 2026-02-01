@@ -96,7 +96,7 @@
                 mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                 esbuild = pkgs.esbuild;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
               };
 
             registry-esbuild =
@@ -105,7 +105,7 @@
                 esbuild = pkgs.esbuild;
                 purs-backend-es = pkgs.purs-backend-es;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
               };
 
             monorepo =
@@ -113,7 +113,7 @@
                 mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                 esbuild = pkgs.esbuild;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
               };
 
             remote-package =
@@ -121,7 +121,7 @@
                 mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                 esbuild = pkgs.esbuild;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
               };
 
             local-package =
@@ -129,7 +129,7 @@
                 mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                 esbuild = pkgs.esbuild;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
               };
 
             mkDotSpago =
@@ -143,7 +143,7 @@
                 mkSpagoDerivation = mkSpagoDerivationBuilder pkgs pkgs;
                 esbuild = pkgs.esbuild;
                 purs = pkgs.purs-unstable;
-                spago = pkgs.spago-unstable;
+                spago = pkgs.spago;
                 nodejs = pkgs.nodejs;
                 pkgs = pkgs;
               };
