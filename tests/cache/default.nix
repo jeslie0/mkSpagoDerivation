@@ -10,6 +10,16 @@ let
       builtins.filterSource
         (path: type: baseNameOf path == "spago.yaml" || baseNameOf path == "spago.lock")
         ./.;
+      # Could also use the numtime's nix-filter:
+      #
+      # src =
+      #   nix-filter {
+      #     root =
+      #       "${self}/software/web";
+
+      #     include =
+      #       ["spago.yaml" "spago.lock"];
+      #   };
       nativeBuildInputs = [ purs spago esbuild ];
       name = "spago-dependencies";
       version = "0.1.0";
