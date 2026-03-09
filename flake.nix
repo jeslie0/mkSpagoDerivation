@@ -12,6 +12,10 @@
       url = "github:purescript/registry-index";
       flake = false;
     };
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, ps-overlay, registry, registry-index }:

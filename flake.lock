@@ -3,6 +3,22 @@
     "flake-compat": {
       "flake": false,
       "locked": {
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1765121682,
         "narHash": "sha256-4VBOP18BFeiPkyhy9o4ssBNQEvfvv1kXkasAYd0+rrA=",
         "owner": "edolstra",
@@ -50,7 +66,7 @@
     },
     "ps-overlay": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
@@ -70,11 +86,11 @@
     "registry": {
       "flake": false,
       "locked": {
-        "lastModified": 1772828762,
-        "narHash": "sha256-6M8hNvWzD95swDz2n8RQT52HFqxhC9G51I/BGU6Cb8M=",
+        "lastModified": 1773002349,
+        "narHash": "sha256-44tKBsA8tcql6G/Ur85fggJToIF8w1vWecxy1xSvvus=",
         "owner": "purescript",
         "repo": "registry",
-        "rev": "0831a31b3fe354bcba2c3aceeb3a1a2519a926b2",
+        "rev": "01cc7cfb5095afb806f227a2e5f20458fd9371a3",
         "type": "github"
       },
       "original": {
@@ -86,11 +102,11 @@
     "registry-index": {
       "flake": false,
       "locked": {
-        "lastModified": 1772828539,
-        "narHash": "sha256-fcItmOgH6UM78qutMHbAwW4wPgbJ1IPt7ffII7wZFkg=",
+        "lastModified": 1773001847,
+        "narHash": "sha256-xSnx2pm8ZfmvIbGWGsUhoz4nsgKCUSAksQ4gPW8s9Mo=",
         "owner": "purescript",
         "repo": "registry-index",
-        "rev": "72cf99f60dc9979c44b3195b539f47666a6ee4f1",
+        "rev": "76bdd68ad7069daf451a46ab715c5d2dd3c42614",
         "type": "github"
       },
       "original": {
@@ -101,6 +117,7 @@
     },
     "root": {
       "inputs": {
+        "flake-compat": "flake-compat",
         "nixpkgs": "nixpkgs",
         "ps-overlay": "ps-overlay",
         "registry": "registry",
