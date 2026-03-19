@@ -81,6 +81,8 @@ let
             src =
               remoteSrc;
 
+            dontBuild = true;
+
             installPhase =
               ''
               mkdir $out
@@ -132,6 +134,8 @@ let
 
             src =
               remoteSrc;
+
+            dontBuild = true;
 
             installPhase =
               "mkdir $out; cp -r * $out";
