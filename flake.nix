@@ -12,9 +12,13 @@
       url = "github:purescript/registry-index";
       flake = false;
     };
+    flake-compat = {
+      url = "github:NixOS/flake-compat";
+      flake = false;
+    };
   };
 
-  outputs = { self, nixpkgs, ps-overlay, registry, registry-index }:
+  outputs = { self, nixpkgs, ps-overlay, registry, registry-index, flake-compat }:
     let
       supportedSystems =
         [ "aarch64-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
