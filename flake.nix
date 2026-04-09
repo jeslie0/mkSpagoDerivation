@@ -38,7 +38,6 @@
 
       buildDotSpagoBuilder = prev:
         import ./nix/buildDotSpago.nix {
-          inherit self registry registry-index;
           mkDerivation = prev.stdenv.mkDerivation;
           lib = prev.lib;
         };
@@ -51,7 +50,7 @@
 
       mkSpagoDerivationBuilder = final: prev:
         import ./nix/mkSpagoDerivation.nix {
-          inherit registry registry-index;
+          inherit registry;
           buildSpagoNodeJs = buildSpagoNodeJsBuilder prev;
           fromYAML = fromYAMLBuilder prev;
           stdenv = prev.stdenv;

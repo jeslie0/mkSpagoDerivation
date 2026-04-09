@@ -1,4 +1,4 @@
-{ mkDerivation, registry, lib }:
+{ mkDerivation, lib }:
 { spagoLockFile }:
 let
   lockFileNix =
@@ -66,7 +66,7 @@ let
         package.rev;
 
       remoteSrc =
-        builtins.fetchGit {
+        fetchGit {
           inherit url rev name;
         };
     in

@@ -1,4 +1,4 @@
-{ stdenv, fromYAML, buildSpagoNodeJs, registry, registry-index, git, lib, importNpmLock }:
+{ stdenv, fromYAML, buildSpagoNodeJs, registry, git, lib, importNpmLock }:
 { src
 
 , spagoYaml ? "${src}/spago.yaml"
@@ -44,7 +44,7 @@ let
 
       dotSpagoCommand =
         import ./buildFromLockFile.nix {
-          inherit registry lib;
+          inherit lib;
           mkDerivation = stdenv.mkDerivation;
         } { spagoLockFile = spagoLock; };
 
@@ -85,7 +85,7 @@ let
       '';
 
   cleanedArgs =
-    builtins.removeAttrs args [ "buildNodeModulesArgs"];
+    removeAttrs args [ "buildNodeModulesArgs"];
 in
 stdenv.mkDerivation (cleanedArgs // {
   inherit name buildPhase installPhase;

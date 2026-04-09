@@ -80,7 +80,7 @@ let
           null;
 
       # Extract indent, key, value, isListEntry for each line
-      matched = builtins.map matchLine filtered;
+      matched = map matchLine filtered;
 
       # Store total number of lines
       numLines = builtins.length filtered;
@@ -129,7 +129,7 @@ let
 
           childIndices = if childIndent == null then [ ] else findChildIndices (index + 1);
 
-          childObjects = builtins.map (processLines lines) childIndices;
+          childObjects = map (processLines lines) childIndices;
 
           childrenMerged = lib.foldl (
             all: currentObject:
